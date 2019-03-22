@@ -7,7 +7,7 @@ export default class MenuComponent extends Component {
         return (
             <div>
                 <MenuItem to={'/home'} component={Link}>Home</MenuItem>
-                <MenuItem to={'/teste'}  component={Link} >ComponentTeste</MenuItem>
+                <MenuItem to={'/cadastro'}  component={Link} >Cadastro</MenuItem>
             </div>
         )
     }
