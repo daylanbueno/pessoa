@@ -7,8 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import SelecionaSexo from './SelecionaSexo';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-
-
+import Cpf from './componentes/Cpf';
 
 const styles = {
   root: {
@@ -42,14 +41,7 @@ class CadastroPessoa extends Component {
         <CardActions>
           <Grid container spacing={24}>
             <Grid item xs={12}>  
-              <TextField
-                  id="outlined-full-width"
-                  label="CPF"
-                  style={{ margin: 10, width:400}}
-                  placeholder="Digite seu cpf"  
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"/>
+               <Cpf id="outlined-full-width" margin="normal" style={{ margin: 10, width:400}} label="CPF" autoFocus placeholder='Digite o cpf' variant='outlined' />
             </Grid>
             <Grid item xs={8}>
                 <TextField
