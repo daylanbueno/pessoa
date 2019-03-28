@@ -14,7 +14,7 @@ const styles = theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120,
+    minWidth: 250,
   },
   selectEmpty: {
     marginTop: theme.spacing.unit * 2,
@@ -49,7 +49,7 @@ class SimpleSelect extends React.Component {
                 }}
                 htmlFor="outlined-age-simple"
             >
-            Sexo
+            Município
           </InputLabel>
           <Select
             value={this.state.age}
@@ -62,8 +62,8 @@ class SimpleSelect extends React.Component {
               />
             }
           >
-            <MenuItem value={10}>Distrigo</MenuItem>
-            <MenuItem value={20}>Feminino</MenuItem>
+            <MenuItem value={10}>Brasíla</MenuItem>
+            <MenuItem value={20}>Goiania</MenuItem>
           </Select>
         </FormControl>
       </form>
