@@ -22,7 +22,8 @@ const styles = {
 
   card: {
     minWidth: 250,
-    maxWidth:2300
+    maxWidth:2300,
+    margin:40
   },
 
   input: {
@@ -62,7 +63,6 @@ class CadastroPessoa extends Component {
         <CardActions>
           <Grid container spacing={24}>
             <Grid item xs={12}> 
-
                <Cpf id="outlined-full-width" 
                     margin="normal"
                     className={classes.inputCpf}
@@ -70,7 +70,6 @@ class CadastroPessoa extends Component {
                     autoFocus 
                     placeholder='Digite o cpf'
                     variant='outlined's/>
-
                 <Data variant='outlined'
                     placeholder="exemplo 01/02/1993"
                     label='Data Nascimento'
@@ -89,7 +88,7 @@ class CadastroPessoa extends Component {
             </Grid>
 
             <Grid item xs={2}>
-              <SelecionaSexo/>
+              <SelecionaSexo />
             </Grid>
           
             <Grid item xs={6}>
@@ -106,17 +105,23 @@ class CadastroPessoa extends Component {
                     variant="outlined"/>
              </Grid>       
               
-             <Grid item xs={6}>
+             <Grid item xs={3}>
                 <Celular variant='outlined'
                     placeholder="Número de celular"
                     label="Celular"
+                    fullWidth
                     className={classes.input}/>
 
+                 
+             </Grid>
+
+             <Grid item xs={3}>
                   <Telefone variant='outlined'
                     placeholder="Número de telefone"
                     label='Telefone'
+                    fullWidth
                     className={classes.input}/>
-             </Grid>
+             </Grid>       
 
              <Grid item xs={10}>
                 <TextField
@@ -131,6 +136,7 @@ class CadastroPessoa extends Component {
                 <TextField
                     id="outlined-full-width"
                     label="Número"
+                    fullWidth
                     className={classes.input}
                     placeholder="Entre com o número"
                     variant="outlined"/>

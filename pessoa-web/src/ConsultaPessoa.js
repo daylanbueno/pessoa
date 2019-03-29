@@ -13,7 +13,9 @@ import TabelaResultadoPessoa from './TabelaResultadoPessoa';
 const styles = {
   card: {
     minWidth: 250,
-    maxWidth:2300
+    maxWidth:2300,
+    margin:40
+
   },
 
   input: {
@@ -40,7 +42,7 @@ class CadastroPessoa extends Component {
             Dados pessoas
         </Typography>
         <CardActions>
-          <Grid container spacing={24}>
+          <Grid container spacing={24} className={classes.grid}>
             <Grid item xs={12}> 
                <Cpf id="outlined-full-width" 
                     margin="normal"

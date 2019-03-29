@@ -9,8 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -43,7 +42,7 @@ class SimpleSelect extends React.Component {
 
     return (
       <form className={classes.root} autoComplete="off">
-        <FormControl variant="outlined" className={classes.formControl}>
+        <FormControl variant="outlined" className={classes.formControl} fullWidth>
             <InputLabel ref={ref => {
                 this.InputLabelRef = ref;
                 }}
