@@ -6,6 +6,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {ic_mode_edit} from 'react-icons-kit/md/ic_mode_edit'
+import { Button } from '@material-ui/core';
+import { Icon } from 'react-icons-kit'
+import {ic_delete} from 'react-icons-kit/md/ic_delete'
 
 const styles = theme => ({
   root: {
@@ -59,7 +63,12 @@ class TabelaResultadoPessoa extends React.Component {
                     {row.telefone}
                   </TableCell>
                   <TableCell>
-                    Botoes
+                    <Button>
+                      <Icon icon={ic_mode_edit} ></Icon>
+                    </Button>
+                    <Button>
+                      <Icon icon={ic_delete} ></Icon>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
