@@ -14,19 +14,32 @@ import {ic_delete} from 'react-icons-kit/md/ic_delete'
 const styles = theme => ({
   root: {
     width: '100%',
+    height: 400,
+    overflow: 'auto',
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    minWidth: 500,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
+    minWidth: 100,
+
+  }
 });
 
 class TabelaResultadoPessoa extends React.Component {
   state = {
     rows : [
+        {'nome':'DAILAN BUENO DOS SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632', 'email':'admin@gmail.com.br'},
+        {'nome':'AMANDA CRISTINA PEREIRA', 'cpf':'023.321.258-22','celular':'(61)98113-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DILAN BUENO RODRIGUES', 'cpf':'001.005.009-45','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DARLAN BUENO FERNANDES', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'MARIA PEREIRA SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DAILAN BUENO DOS SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632', 'email':'admin@gmail.com.br'},
+        {'nome':'AMANDA CRISTINA PEREIRA', 'cpf':'023.321.258-22','celular':'(61)98113-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DILAN BUENO RODRIGUES', 'cpf':'001.005.009-45','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DAILAN BUENO DOS SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632', 'email':'admin@gmail.com.br'},
+        {'nome':'AMANDA CRISTINA PEREIRA', 'cpf':'023.321.258-22','celular':'(61)98113-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DILAN BUENO RODRIGUES', 'cpf':'001.005.009-45','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'DARLAN BUENO FERNANDES', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
+        {'nome':'MARIA PEREIRA SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
         {'nome':'DAILAN BUENO DOS SANTOS', 'cpf':'045.013.481-43','celular':'(61)99160-2632','telefone':'(61)3201-2632', 'email':'admin@gmail.com.br'},
         {'nome':'AMANDA CRISTINA PEREIRA', 'cpf':'023.321.258-22','celular':'(61)98113-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
         {'nome':'DILAN BUENO RODRIGUES', 'cpf':'001.005.009-45','celular':'(61)99160-2632','telefone':'(61)3201-2632','email':'admin@gmail.com.br'},
@@ -39,11 +52,10 @@ class TabelaResultadoPessoa extends React.Component {
   render() {
     const { classes } = this.props;
     const { rows } = this.state;
-
     return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+      <Paper className={classes.root} >
+          <Table className={classes.table} 
+           >
             <TableBody>
               {rows.map(row => (
                 <TableRow key={row.id}>
@@ -74,7 +86,6 @@ class TabelaResultadoPessoa extends React.Component {
               ))}
             </TableBody>
           </Table>
-        </div>
       </Paper>
     );
   }
