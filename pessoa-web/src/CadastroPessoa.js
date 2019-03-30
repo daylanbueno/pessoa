@@ -17,7 +17,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = {  
   card: {
-    height:600,
+    height:650,
     margin:20
   },
   input: {
@@ -29,6 +29,10 @@ const styles = {
   inputCpf: {
     margin: 10,
     width:400
+  },
+  titulo: {
+    margin:20,
+    color:'#3f51b5'
   }
 };
 
@@ -38,7 +42,7 @@ class CadastroPessoa extends Component {
     return ( 
       <div>
       <Card className={classes.card}>
-        <Typography  variant="subtitle1" gutterBottom>
+        <Typography className={classes.titulo}  variant="display1" gutterBottom>
             Dados pessoas
         </Typography>
         <CardActions>
@@ -92,8 +96,6 @@ class CadastroPessoa extends Component {
                     label="Celular"
                     fullWidth
                     className={classes.input}/>
-
-                 
              </Grid>
 
              <Grid item xs={3}>

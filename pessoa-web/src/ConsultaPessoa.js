@@ -27,7 +27,10 @@ const styles = {
   inputCpf: {
     margin: 10,
     width:400
-
+  },
+  titulo: {
+    margin:25,
+    color:'#3f51b5'
   }
 };
 
@@ -37,8 +40,8 @@ class CadastroPessoa extends Component {
     return ( 
       <div>
       <Card className={classes.card}>
-        <Typography  variant="subtitle1" gutterBottom>
-            Dados pessoas
+        <Typography className={classes.titulo} variant="display1" gutterBottom>
+            Pesquisa de pessoa
         </Typography>
         <CardActions>
           <Grid container spacing={16} className={classes.grid}>
