@@ -15,40 +15,21 @@ import SelecionaEstado from './SelecionaEstado';
 import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-
+const styles = {  
   card: {
-    minWidth: 250,
-    maxWidth:2300,
-    margin:40
+    height:600,
+    margin:20
   },
-
   input: {
-    margin: 10
+    margin: 10,
   },
-
   button: {
     margin: 25
   },
   inputCpf: {
     margin: 10,
     width:400
-
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
+  }
 };
 
 class CadastroPessoa extends Component {
@@ -61,7 +42,7 @@ class CadastroPessoa extends Component {
             Dados pessoas
         </Typography>
         <CardActions>
-          <Grid container spacing={24}>
+          <Grid container spacing={16}>
             <Grid item xs={12}> 
                <Cpf id="outlined-full-width" 
                     margin="normal"
@@ -159,12 +140,12 @@ class CadastroPessoa extends Component {
              </Grid>
 
               <Grid item xs={12}>
-                <Button variant="contained" color="primary" className={classes.button}>
-                  Cadastrar
-                </Button>
-                <Button variant="contained" className={classes.button}>
-                  Cancelar
-                </Button>
+                 <Button variant="contained" color="primary" className={classes.button}>
+                    Cadastrar
+                  </Button>
+                  <Button variant="contained" className={classes.button}>
+                    Cancelar
+                 </Button>
               </Grid>             
           </Grid>
         </CardActions>

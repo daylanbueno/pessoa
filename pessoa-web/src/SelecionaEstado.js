@@ -8,15 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 const styles = theme => ({
-  root: {
-
-  },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 300,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
   },
 });
 
@@ -41,7 +34,7 @@ class SimpleSelect extends React.Component {
     const { classes } = this.props;
 
     return (
-      <form className={classes.root} autoComplete="off">
+      <form  autoComplete="off" >
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
             <InputLabel ref={ref => {
                 this.InputLabelRef = ref;

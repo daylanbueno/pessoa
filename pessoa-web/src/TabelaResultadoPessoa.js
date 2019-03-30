@@ -15,12 +15,11 @@ const styles = theme => ({
   root: {
     width: '100%',
     height: 400,
-    overflow: 'auto',
-    marginTop: theme.spacing.unit * 3,
+    overflow: 'auto',  
   },
   table: {
     minWidth: 100,
-
+    overflow: 'auto'
   }
 });
 

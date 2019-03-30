@@ -14,14 +14,13 @@ const styles = {
   card: {
     minWidth: 250,
     maxWidth:2300,
-    margin:40
+    margin:20,
+    height:600
 
   },
-
   input: {
     margin: 10
   },
-
   button: {
     margin: 25
   },
@@ -42,7 +41,8 @@ class CadastroPessoa extends Component {
             Dados pessoas
         </Typography>
         <CardActions>
-          <Grid container spacing={24} className={classes.grid}>
+          <Grid container spacing={16} className={classes.grid}>
+            
             <Grid item xs={12}> 
                <Cpf id="outlined-full-width" 
                     margin="normal"
@@ -50,7 +50,7 @@ class CadastroPessoa extends Component {
                     label="CPF" 
                     autoFocus 
                     placeholder='Digite o cpf'
-                    variant='outlined's/>
+                    variant='outlined'/>
             </Grid>
           
             <Grid item xs={10}>

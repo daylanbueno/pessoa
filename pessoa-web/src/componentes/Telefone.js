@@ -2,7 +2,7 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import NumberFormat from 'react-number-format'
 
-function Telefone (props) {
+function Telefone(props) {
   let propriedades = Object.assign({}, props)
 
   return (
