@@ -3,19 +3,20 @@ package br.com.pessoa.br.com.entity;
 import javax.persistence.*;
 
 @Entity
-public class Estado {
+public class Municipio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nome;
-    private String sigla;
 
-    public Estado() {}
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
+    private Estado estado;
 
-    public Estado(String nome, String sigla) {
+    public Municipio(String nome, Estado estado) {
         this.nome = nome;
-        this.sigla = sigla;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -34,11 +35,11 @@ public class Estado {
         this.nome = nome;
     }
 
-    public String getSigla() {
-        return sigla;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
