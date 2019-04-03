@@ -7,6 +7,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import axios  from 'axios'
+import  { URL_BASE }  from '../src/util/Url'
+
 const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
@@ -18,13 +21,25 @@ class SimpleSelect extends React.Component {
     age: '',
     name: 'hai',
     labelWidth: 0,
+    estados:[]
   };
 
   componentDidMount() {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
+    this.recuperarTodosOsEstados()
   }
+  
+  recuperarTodosOsEstados(){
+    axios.get(`${URL_BASE}/estados`)
+    .then(resp => {
+      this.setState({estados:resp.data})
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -32,7 +47,7 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const {estados} = this.state
     return (
       <form  autoComplete="off" >
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -54,8 +69,11 @@ class SimpleSelect extends React.Component {
               />
             }
           >
-            <MenuItem value={10}>Distrito Federal</MenuItem>
-            <MenuItem value={20}>Góias</MenuItem>
+          {estados.map( estado => {
+            return(
+              <MenuItem value={estado.id}>{estado.nome}</MenuItem>
+            )
+          })}
           </Select>
         </FormControl>
       </form>
