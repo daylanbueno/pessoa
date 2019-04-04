@@ -37,6 +37,16 @@ const styles = {
 };
 
 class CadastroPessoa extends Component {
+
+  state = {
+    codEstadoSelecionado:""
+  }
+  
+  recuperarCodEstadoSelecionado(cod){
+    this.setState({codEstadoSelecionado:cod})
+  }
+
+
   render() {
     const {classes} = this.props
     return ( 
@@ -135,10 +145,10 @@ class CadastroPessoa extends Component {
              </Grid>
 
              <Grid item xs={3}>
-                <SelecionaEstado/>
+                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarCodEstadoSelecionado.bind(this)}/>
              </Grid>
              <Grid item xs={3}>
-                <SelecionaMunicipio/>
+                <SelecionaMunicipio codEstado={this.state.codEstadoSelecionado}/>
              </Grid>
 
               <Grid item xs={12}>

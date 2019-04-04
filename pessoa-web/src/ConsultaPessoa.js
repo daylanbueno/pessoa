@@ -13,39 +13,35 @@ import TabelaResultadoPessoa from './TabelaResultadoPessoa';
 const styles = {
   card: {
     minWidth: 250,
-    maxWidth:2300,
-    margin:20,
-    height:600
-
+    maxWidth:2300
   },
+
   input: {
     margin: 10
   },
+
   button: {
     margin: 25
   },
   inputCpf: {
     margin: 10,
     width:400
-  },
-  titulo: {
-    margin:25,
-    color:'#3f51b5'
+
   }
 };
 
 class CadastroPessoa extends Component {
+
   render() {
     const {classes} = this.props
     return ( 
       <div>
       <Card className={classes.card}>
-        <Typography className={classes.titulo} variant="display1" gutterBottom>
-            Pesquisa de pessoa
+        <Typography  variant="subtitle1" gutterBottom>
+            Dados pessoas
         </Typography>
         <CardActions>
-          <Grid container spacing={16} className={classes.grid}>
-            
+          <Grid container spacing={24}>
             <Grid item xs={12}> 
                <Cpf id="outlined-full-width" 
                     margin="normal"
@@ -67,18 +63,18 @@ class CadastroPessoa extends Component {
                     variant="outlined"/>
             </Grid>
 
-              <Grid item xs={12}>
-                <Button variant="contained" color="primary" className={classes.button}>
-                  Pesquisar
-                </Button>
-                <Button variant="contained" className={classes.button}>
-                  Cancelar
-                </Button>
-              </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" className={classes.button}>
+                Pesquisar
+              </Button>
+              <Button variant="contained" className={classes.button}>
+                Cancelar
+              </Button>
+            </Grid> 
 
-              <Grid item xs={12}> 
-                <TabelaResultadoPessoa/>
-              </Grid>
+            <Grid item xs={12}> 
+              <TabelaResultadoPessoa/>
+            </Grid>
           </Grid>
         </CardActions>
       </Card>

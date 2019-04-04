@@ -14,6 +14,8 @@ public class Municipio {
     @JoinColumn(nullable = false)
     private Estado estado;
 
+    public Municipio() {}
+
     public Municipio(String nome, Estado estado) {
         this.nome = nome;
         this.estado = estado;

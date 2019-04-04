@@ -25,6 +25,5 @@ public class PessoaApplication implements CommandLineRunner {
 		Estado distritoFederal = new Estado("Distrito Federal","DF");
 		Municipio brasilia = new Municipio("Brasília",distritoFederal);
 		municipioRepository.save(brasilia);
-
 	}
 }

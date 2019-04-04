@@ -42,7 +42,9 @@ class SimpleSelect extends React.Component {
 
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const codEstado = event.target.value;
+    this.setState({ [event.target.name]: codEstado });
+    this.props.callbackSelecionaCodEstado(codEstado)
   };
 
   render() {
