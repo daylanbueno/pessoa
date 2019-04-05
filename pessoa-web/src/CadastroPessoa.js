@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React,{ Component }  from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
@@ -41,20 +41,80 @@ const styles = {
 class CadastroPessoa extends Component {
 
   state = {
-    municipios:[]
-  }
+    municipios:[],
+    form:{
+        cpf:'',
+        dataNascimento:'',
+        nomeCompleto:'',
+        email:'',
+        celular:'',
+        telefone:'',
+        logradouro:'',
+        numero:'',
+        complemento:'',
+        municipio:''
+        }
+    }
   
   recuperarMunicipioPorCodEstado(cod){
     axios.get(`${URL_BASE}/municipios/${cod}`)
     .then(resp => {
+      console.log('busco municipios ',resp.data)
       this.setState({municipios:resp.data})
     }).catch (e => {
       console.log('Error: ',e)
     })
   }
 
+  salvarPessoa(){
+    const param = this.criarParamentroPessoa()
+    axios.post(`${URL_BASE}/pessoa`,param)
+    .then(resp => {
+      console.log('deu bom ')
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
+  criarParamentroPessoa() {
+    const form = this.state
+    let pessoa = {
+      cpf: form.cpf,
+      dataNascimento:form.dataNascimento,
+      nomeCompleto: form.nomeCompleto,
+      contato: {
+        email:form.email,
+        celular:form.celular,
+        telefone:form.telefone,
+      },
+      endereco: {
+        logradouro:form.logradouro,
+        numero:form.numero,
+        complemento:form.complemento,
+        municipio:form.municipio
+      }
+    }
+    return pessoa
+  }
+
+
+  selecionaMunicipio(municipio) {
+    const { form } = this.state;
+    form['municipio'] = municipio
+    this.setState({form:form})
+  }
+
+  onChange(nomeCampo, evento) {
+    const { form } = this.state;
+    form[nomeCampo] = evento.target.value
+    this.setState({form:form})
+    console.log('Value ',form)
+
+  }
+
   render() {
     const {classes} = this.props
+    const { form } = this.state
     return ( 
       <div>
       <Card className={classes.card}>
@@ -67,11 +127,15 @@ class CadastroPessoa extends Component {
                <Cpf id="outlined-full-width" 
                     margin="normal"
                     className={classes.inputCpf}
+                    value={form.cpf}
+                    onChange={this.onChange.bind(this,'cpf')}
                     label="CPF" 
                     autoFocus 
                     placeholder='Digite o cpf'
                     variant='outlined's/>
                 <Data variant='outlined'
+                    value={form.dataNascimento}
+                    onChange={this.onChange.bind(this,'dataNascimento')}
                     placeholder="exemplo 01/02/1993"
                     label='Data Nascimento'
                     className={classes.input}/>     
@@ -81,6 +145,8 @@ class CadastroPessoa extends Component {
                 <TextField
                     id="outlined-full-width"
                     label="Nome completo"
+                    value={form.nomeCompleto}
+                    onChange={this.onChange.bind(this,'nomeCompleto')}
                     className={classes.input}
                     placeholder="Entre com o nome completo"
                     fullWidth
@@ -96,6 +162,8 @@ class CadastroPessoa extends Component {
                 <TextField
                     id="outlined-email-input"
                     label="Email"
+                    value={form.email}
+                    onChange={this.onChange.bind(this,'email')}
                     className={classes.input}
                     type="email"
                     name="email"
@@ -110,6 +178,8 @@ class CadastroPessoa extends Component {
                 <Celular variant='outlined'
                     placeholder="Número de celular"
                     label="Celular"
+                    value={form.celular}
+                    onChange={this.onChange.bind(this,'celular')}
                     fullWidth
                     className={classes.input}/>
              </Grid>
@@ -118,6 +188,8 @@ class CadastroPessoa extends Component {
                   <Telefone variant='outlined'
                     placeholder="Número de telefone"
                     label='Telefone'
+                    value={form.telefone}
+                    onChange={this.onChange.bind(this,'telefone')}
                     fullWidth
                     className={classes.input}/>
              </Grid>       
@@ -125,6 +197,8 @@ class CadastroPessoa extends Component {
              <Grid item xs={10}>
                 <TextField
                     label="Logradouro"
+                    value={form.logradouro}
+                    onChange={this.onChange.bind(this,'logradouro')}
                     className={classes.input}
                     placeholder="Entre com o  logradouro"
                     fullWidth
@@ -135,6 +209,8 @@ class CadastroPessoa extends Component {
                 <TextField
                     id="outlined-full-width"
                     label="Número"
+                    value={form.numero}
+                    onChange={this.onChange.bind(this,'numero')}
                     fullWidth
                     className={classes.input}
                     placeholder="Entre com o número"
@@ -144,6 +220,8 @@ class CadastroPessoa extends Component {
              <Grid item xs={6}>
                 <TextField
                     label="Complemento"
+                    value={form.complemento}
+                    onChange={this.onChange.bind(this,'complemento')}
                     className={classes.input}
                     placeholder="Entre com o  complemento"
                     fullWidth
@@ -151,10 +229,10 @@ class CadastroPessoa extends Component {
              </Grid>
 
              <Grid item xs={3}>
-                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)}/>
+                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)} />
              </Grid>
              <Grid item xs={3}>
-                <SelecionaMunicipio municipios={this.state.municipios}/>
+                <SelecionaMunicipio municipios={this.state.municipios} callbackSelecionaMunicipio={this.selecionaMunicipio.bind(this)}/>
              </Grid>
 
               <Grid item xs={12}>

@@ -28,11 +28,15 @@ class SimpleSelect extends React.Component {
   }
 
   handleChange = event => {
+    const  { municipios } = this.props
     this.setState({ [event.target.name]: event.target.value });
+    const municipio = municipios.find(item => item.id === event.target.value)
+    this.props.callbackSelecionaMunicipio(municipio)
   };
 
   render() {
     const { classes } = this.props;
+    console.log('Municípios: >',this.props.municipios)
     return (
       <form autoComplete="off">
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -57,9 +61,9 @@ class SimpleSelect extends React.Component {
           <MenuItem value="">
               <em>Seleciona o muncípio</em>
           </MenuItem>
-          {this.props.municipios.map( municipio => {
+          {this.props.municipios.map(municipio => {
             return(
-              <MenuItem value={municipio.id}>{municipio.nome}</MenuItem>
+              <MenuItem key={municipio.id} value={municipio.id}>{municipio.nome}</MenuItem>
             )
           })}
           </Select>

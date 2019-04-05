@@ -32,6 +32,8 @@ const styles = {
 
 class CadastroPessoa extends Component {
 
+
+
   render() {
     const {classes} = this.props
     return ( 
