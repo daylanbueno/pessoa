@@ -71,6 +71,9 @@ class SimpleSelect extends React.Component {
               />
             }
           >
+          <MenuItem value="">
+              <em>Seleciona o estado</em>
+          </MenuItem>
           {estados.map( estado => {
             return(
               <MenuItem value={estado.id}>{estado.nome}</MenuItem>

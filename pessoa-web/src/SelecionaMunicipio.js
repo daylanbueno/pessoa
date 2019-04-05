@@ -7,8 +7,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import axios from 'axios'
-import  { URL_BASE } from './util/Url'
 
 const styles = theme => ({
   formControl: {
@@ -18,10 +16,8 @@ const styles = theme => ({
 
 class SimpleSelect extends React.Component {
   state = {
-    age: '',
-    name: 'hai',
+    municipioSelecionado: '',
     labelWidth: 0,
-    municipios:[]
   };
 
   componentDidMount() {
@@ -30,15 +26,6 @@ class SimpleSelect extends React.Component {
     });
   
   }
-  recuperarTodosOsEstados(){
-    console.log("carregando ", this.props.codEstado)
-    axios.get(`${URL_BASE}/municipios/${this.props.codEstado}`)
-    .then(resp => {
-      this.setState({municipios:resp.data})
-    }).catch (e => {
-      console.log('Error: ',e)
-    })
-  }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -46,7 +33,6 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log("municipios ", this.props.codEstado)
     return (
       <form autoComplete="off">
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -58,17 +44,20 @@ class SimpleSelect extends React.Component {
             Município
           </InputLabel>
           <Select
-            value={this.state.age}
+            value={this.state.municipioSelecionado}
             onChange={this.handleChange}
             input={
               <OutlinedInput
                 labelWidth={this.state.labelWidth}
-                name="age"
+                name="municipioSelecionado"
                 id="outlined-age-simple"
               />
             }
           >
-          {this.state.municipios.map( municipio => {
+          <MenuItem value="">
+              <em>Seleciona o muncípio</em>
+          </MenuItem>
+          {this.props.municipios.map( municipio => {
             return(
               <MenuItem value={municipio.id}>{municipio.nome}</MenuItem>
             )

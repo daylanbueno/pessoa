@@ -14,6 +14,8 @@ import Data from './componentes/Data';
 import SelecionaEstado from './SelecionaEstado';
 import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
+import axios from 'axios'
+import  { URL_BASE } from './util/Url'
 
 const styles = {  
   card: {
@@ -39,13 +41,17 @@ const styles = {
 class CadastroPessoa extends Component {
 
   state = {
-    codEstadoSelecionado:""
+    municipios:[]
   }
   
-  recuperarCodEstadoSelecionado(cod){
-    this.setState({codEstadoSelecionado:cod})
+  recuperarMunicipioPorCodEstado(cod){
+    axios.get(`${URL_BASE}/municipios/${cod}`)
+    .then(resp => {
+      this.setState({municipios:resp.data})
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
   }
-
 
   render() {
     const {classes} = this.props
@@ -145,10 +151,10 @@ class CadastroPessoa extends Component {
              </Grid>
 
              <Grid item xs={3}>
-                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarCodEstadoSelecionado.bind(this)}/>
+                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)}/>
              </Grid>
              <Grid item xs={3}>
-                <SelecionaMunicipio codEstado={this.state.codEstadoSelecionado}/>
+                <SelecionaMunicipio municipios={this.state.municipios}/>
              </Grid>
 
               <Grid item xs={12}>
