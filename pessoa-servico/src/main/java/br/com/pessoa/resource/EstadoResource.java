@@ -1,7 +1,7 @@
-package br.com.pessoa.br.com.resource;
+package br.com.pessoa.resource;
 
-import br.com.pessoa.br.com.entity.Estado;
-import br.com.pessoa.br.com.service.EstadoService;
+import br.com.pessoa.entity.Estado;
+import br.com.pessoa.service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

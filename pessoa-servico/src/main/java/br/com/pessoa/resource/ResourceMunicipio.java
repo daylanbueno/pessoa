@@ -1,12 +1,9 @@
-package br.com.pessoa.br.com.resource;
+package br.com.pessoa.resource;
 
-import br.com.pessoa.br.com.entity.Municipio;
-import br.com.pessoa.br.com.service.MunicipioService;
+import br.com.pessoa.entity.Municipio;
+import br.com.pessoa.service.MunicipioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +15,7 @@ public class ResourceMunicipio {
     private MunicipioService municipioService;
 
     @GetMapping("/{idEstado}")
+    @CrossOrigin(origins = "*")
     public List<Municipio> recuperarMunicipios(@PathVariable  Integer idEstado){
         return  municipioService.recuperaMunicipio(idEstado);
     }

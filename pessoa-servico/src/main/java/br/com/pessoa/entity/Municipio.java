@@ -1,4 +1,4 @@
-package br.com.pessoa.br.com.entity;
+package br.com.pessoa.entity;
 
 import javax.persistence.*;
 

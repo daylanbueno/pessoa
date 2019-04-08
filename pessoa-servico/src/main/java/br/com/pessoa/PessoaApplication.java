@@ -1,9 +1,8 @@
 package br.com.pessoa;
 
-import br.com.pessoa.br.com.entity.Estado;
-import br.com.pessoa.br.com.entity.Municipio;
-import br.com.pessoa.br.com.repository.EstadoRepository;
-import br.com.pessoa.br.com.repository.MunicipioRepository;
+import br.com.pessoa.entity.Estado;
+import br.com.pessoa.entity.Municipio;
+import br.com.pessoa.repository.MunicipioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

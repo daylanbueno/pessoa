@@ -1,7 +1,7 @@
-package br.com.pessoa.br.com.service;
+package br.com.pessoa.service;
 
-import br.com.pessoa.br.com.entity.Estado;
-import br.com.pessoa.br.com.repository.EstadoRepository;
+import br.com.pessoa.repository.EstadoRepository;
+import br.com.pessoa.entity.Estado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
