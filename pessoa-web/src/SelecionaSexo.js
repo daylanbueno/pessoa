@@ -33,7 +33,9 @@ class SimpleSelect extends React.Component {
   }
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const sexo = event.target.value
+    this.setState({ [event.target.name]: sexo });
+    this.props.callbackSelecionaSexo(sexo)
   };
 
   render() {
@@ -60,8 +62,8 @@ class SimpleSelect extends React.Component {
               />
             }
           >
-            <MenuItem value={10}>Distrigo</MenuItem>
-            <MenuItem value={20}>Feminino</MenuItem>
+            <MenuItem value={'MASCULINO'}>Masculino</MenuItem>
+            <MenuItem value={'FEMININO'}>Feminino</MenuItem>
           </Select>
         </FormControl>
       </form>

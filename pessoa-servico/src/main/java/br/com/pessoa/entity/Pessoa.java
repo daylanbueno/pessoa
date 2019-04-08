@@ -1,9 +1,10 @@
 package br.com.pessoa.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Pessoa {
+public class Pessoa implements Serializable {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)

@@ -46,6 +46,7 @@ class CadastroPessoa extends Component {
         cpf:'',
         dataNascimento:'',
         nomeCompleto:'',
+        sexo:'',
         email:'',
         celular:'',
         telefone:'',
@@ -77,11 +78,13 @@ class CadastroPessoa extends Component {
   }
 
   criarParamentroPessoa() {
-    const form = this.state
+    const form = this.state.form
+    console.log('form',form)
     let pessoa = {
       cpf: form.cpf,
       dataNascimento:form.dataNascimento,
       nomeCompleto: form.nomeCompleto,
+      sexo:form.sexo,
       contato: {
         email:form.email,
         celular:form.celular,
@@ -94,6 +97,7 @@ class CadastroPessoa extends Component {
         municipio:form.municipio
       }
     }
+    console.log('p',pessoa)
     return pessoa
   }
 
@@ -101,6 +105,14 @@ class CadastroPessoa extends Component {
   selecionaMunicipio(municipio) {
     const { form } = this.state;
     form['municipio'] = municipio
+    this.setState({form:form})
+  }
+
+
+  selecionaSexo(sexo) {
+    console.log('sexo',sexo)
+    const { form } = this.state;
+    form['sexo'] = sexo
     this.setState({form:form})
   }
 
@@ -155,7 +167,7 @@ class CadastroPessoa extends Component {
             </Grid>
 
             <Grid item xs={2}>
-              <SelecionaSexo />
+              <SelecionaSexo callbackSelecionaSexo={this.selecionaSexo.bind(this)} />
             </Grid>
           
             <Grid item xs={6}>
@@ -236,7 +248,7 @@ class CadastroPessoa extends Component {
              </Grid>
 
               <Grid item xs={12}>
-                 <Button variant="contained" color="primary" className={classes.button}>
+                 <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarPessoa.bind(this)}>
                     Cadastrar
                   </Button>
                   <Button variant="contained" className={classes.button}>
