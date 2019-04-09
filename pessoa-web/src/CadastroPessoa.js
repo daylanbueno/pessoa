@@ -71,10 +71,26 @@ class CadastroPessoa extends Component {
     const param = this.criarParamentroPessoa()
     axios.post(`${URL_BASE}/pessoa`,param)
     .then(resp => {
+      this.limparCampos();
       console.log('deu bom ')
     }).catch (e => {
       console.log('Error: ',e)
     })
+  }
+
+  limparCampos() {
+    const { form } = this.state;
+    form['cpf'] = ''
+    form['dataNascimento'] = ''
+    form['nomeCompleto'] = ''
+    form['email'] = ''
+    form['celular'] = ''
+    form['telefone'] = ''
+    form['logradouro'] = ''
+    form['municipio'] = ''
+    form['complemento'] = ''
+    form['numero'] = ''
+    this.setState({form:form})
   }
 
   criarParamentroPessoa() {
@@ -167,7 +183,7 @@ class CadastroPessoa extends Component {
             </Grid>
 
             <Grid item xs={2}>
-              <SelecionaSexo callbackSelecionaSexo={this.selecionaSexo.bind(this)} />
+              <SelecionaSexo sexo={this.state.form['sexo']} callbackSelecionaSexo={this.selecionaSexo.bind(this)} />
             </Grid>
           
             <Grid item xs={6}>

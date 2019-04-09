@@ -52,6 +52,7 @@ class SimpleSelect extends React.Component {
             Sexo
           </InputLabel>
           <Select
+            defaultValue={this.props.sexo}
             value={this.state.age}
             onChange={this.handleChange}
             input={
