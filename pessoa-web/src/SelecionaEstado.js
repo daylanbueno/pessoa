@@ -61,7 +61,7 @@ class SimpleSelect extends React.Component {
             Estado
           </InputLabel>
           <Select
-            value={this.state.age}
+            value={this.props.idEstado}
             onChange={this.handleChange}
             input={
               <OutlinedInput

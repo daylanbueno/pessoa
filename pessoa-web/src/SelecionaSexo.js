@@ -21,7 +21,6 @@ const styles = theme => ({
 
 class SimpleSelect extends React.Component {
   state = {
-    age: '',
     name: 'hai',
     labelWidth: 0,
   };
@@ -53,7 +52,7 @@ class SimpleSelect extends React.Component {
           </InputLabel>
           <Select
             defaultValue={this.props.sexo}
-            value={this.state.age}
+            value={this.props.sexo}
             onChange={this.handleChange}
             input={
               <OutlinedInput
@@ -63,6 +62,7 @@ class SimpleSelect extends React.Component {
               />
             }
           >
+             <MenuItem value={''}>Selecione</MenuItem>
             <MenuItem value={'MASCULINO'}>Masculino</MenuItem>
             <MenuItem value={'FEMININO'}>Feminino</MenuItem>
           </Select>

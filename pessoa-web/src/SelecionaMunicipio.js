@@ -16,7 +16,6 @@ const styles = theme => ({
 
 class SimpleSelect extends React.Component {
   state = {
-    municipioSelecionado: '',
     labelWidth: 0,
   };
 
@@ -31,6 +30,7 @@ class SimpleSelect extends React.Component {
     const  { municipios } = this.props
     this.setState({ [event.target.name]: event.target.value });
     const municipio = municipios.find(item => item.id === event.target.value)
+ 
     this.props.callbackSelecionaMunicipio(municipio)
   };
 
@@ -48,12 +48,12 @@ class SimpleSelect extends React.Component {
             Município
           </InputLabel>
           <Select
-            value={this.state.municipioSelecionado}
+            value={this.props.municipio.id}
             onChange={this.handleChange}
             input={
               <OutlinedInput
                 labelWidth={this.state.labelWidth}
-                name="municipioSelecionado"
+                name="age"
                 id="outlined-age-simple"
               />
             }

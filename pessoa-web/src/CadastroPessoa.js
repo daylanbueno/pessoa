@@ -43,6 +43,7 @@ class CadastroPessoa extends Component {
 
   state = {
     municipios:[],
+    codEstado:'',
     form:{
         cpf:'',
         dataNascimento:'',
@@ -59,6 +60,7 @@ class CadastroPessoa extends Component {
     }
   
   recuperarMunicipioPorCodEstado(cod){
+    this.setState({codEstado:cod})
     axios.get(`${URL_BASE}/municipios/${cod}`)
     .then(resp => {
       console.log('busco municipios ',resp.data)
@@ -91,6 +93,8 @@ class CadastroPessoa extends Component {
     form['municipio'] = ''
     form['complemento'] = ''
     form['numero'] = ''
+    form['sexo'] = ''
+    this.setState({codEstado:''})
     this.setState({form:form})
   }
 
@@ -119,9 +123,11 @@ class CadastroPessoa extends Component {
   }
 
   selecionaMunicipio(municipio) {
+    console.log('municipio selecionado ',municipio)
     const { form } = this.state;
     form['municipio'] = municipio
     this.setState({form:form})
+    console.log('form Municipio  ',this.state.form['municipio'])
   }
 
 
@@ -257,10 +263,10 @@ class CadastroPessoa extends Component {
              </Grid>
 
              <Grid item xs={3}>
-                <SelecionaEstado callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)} />
+                <SelecionaEstado idEstado={this.state.codEstado} callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)} />
              </Grid>
              <Grid item xs={3}>
-                <SelecionaMunicipio municipios={this.state.municipios} callbackSelecionaMunicipio={this.selecionaMunicipio.bind(this)}/>
+                <SelecionaMunicipio municipio={this.state.form['municipio']} municipios={this.state.municipios} callbackSelecionaMunicipio={this.selecionaMunicipio.bind(this)}/>
              </Grid>
 
               <Grid item xs={12}>
