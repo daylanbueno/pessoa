@@ -16,6 +16,7 @@ import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import  { URL_BASE } from './util/Url'
+import { showMsgSuccess } from './util/Menssages'
 
 const styles = {  
   card: {
@@ -72,7 +73,7 @@ class CadastroPessoa extends Component {
     axios.post(`${URL_BASE}/pessoa`,param)
     .then(resp => {
       this.limparCampos();
-      console.log('deu bom ')
+      showMsgSuccess('Operação realizada com sucesso!')
     }).catch (e => {
       console.log('Error: ',e)
     })
@@ -116,7 +117,6 @@ class CadastroPessoa extends Component {
     console.log('p',pessoa)
     return pessoa
   }
-
 
   selecionaMunicipio(municipio) {
     const { form } = this.state;
@@ -267,7 +267,7 @@ class CadastroPessoa extends Component {
                  <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarPessoa.bind(this)}>
                     Cadastrar
                   </Button>
-                  <Button variant="contained" className={classes.button}>
+                  <Button variant="contained" className={classes.button} onClick={this.limparCampos.bind(this)} >
                     Cancelar
                  </Button>
               </Grid>             
