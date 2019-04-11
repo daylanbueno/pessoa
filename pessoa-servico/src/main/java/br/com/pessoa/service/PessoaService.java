@@ -18,7 +18,7 @@ public class PessoaService {
         pessoaRepository.save(pessoa);
     }
 
-    public Pessoa recuperarPessoaPorCpf(String cpf) {
+    public List<Pessoa>  recuperarPessoaPorCpf(String cpf) {
         return pessoaRepository.recuperarPessoaPorCpf(cpf);
     }
 

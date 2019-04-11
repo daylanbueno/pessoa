@@ -23,7 +23,7 @@ public class PessoaResource {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/cpf/{cpf}")
-    public Pessoa recuperarPessoaPorCpf(@PathVariable ("cpf") String cpf) {
+    public List<Pessoa> recuperarPessoaPorCpf(@PathVariable ("cpf") String cpf) {
         return pessoaService.recuperarPessoaPorCpf(cpf);
     }
 
