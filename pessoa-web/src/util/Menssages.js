@@ -6,6 +6,11 @@ export function showMsgSuccess(msg) {
     toastr.success(msg)
 } 
 
+export function showMsgError(msg) {
+    toastr.error(msg)
+} 
+
+
 export default props  => (
     <ReduxToastr
         timeOut={4000}
