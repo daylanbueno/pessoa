@@ -6,7 +6,7 @@ function Cpf (props) {
   let propriedades = Object.assign({}, props)
 
   return (
-    <NumberFormat {...propriedades} margin='normal' customInput={TextField} format='###.###.###-##' />
+    <NumberFormat  {...propriedades} margin='normal' customInput={TextField} format='###.###.###-##' />
   )
 }
 

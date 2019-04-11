@@ -72,7 +72,7 @@ class CadastroPessoa extends Component {
 
   salvarPessoa(){
     const param = this.criarParamentroPessoa()
-    axios.post(`${URL_BASE}/pessoa`,param)
+    axios.post(`${URL_BASE}/pessoas`,param)
     .then(resp => {
       this.limparCampos();
       showMsgSuccess('Operação realizada com sucesso!')

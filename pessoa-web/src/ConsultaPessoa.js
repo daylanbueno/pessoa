@@ -43,11 +43,17 @@ class CadastroPessoa extends Component {
     pessoas:[]
    }
 
+   componentDidMount() {
+     this.recuperarTodas();
+   }
+
    recuperarPessoaPorCpf() {
-    axios.get(`${URL_BASE}/pessoa/cpf/${this.state.filtro.cpf}`)
+    console.log('consultando')
+    axios.get(`${URL_BASE}/pessoas/cpf/${this.state.filtro.cpf}`)
     .then(resp => {
       const resultado = resp.data
-      if(resultado ==='') {
+      console.log('resutado',resultado)
+      if(resultado.length === 0 ) {
         showMsgError('Não foi encontrado resultado que atenda os parametros da pesquisa.')
       }
       this.setState({pessoas:resultado})
@@ -56,24 +62,65 @@ class CadastroPessoa extends Component {
     })
   }
 
+  recuperarTodas() {
+    axios.get(`${URL_BASE}/pessoas`)
+    .then(resp => {
+      const resultado = resp.data
+      this.setState({pessoas:resultado})
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
+
+  recuperarPessoaPorNome() {
+    axios.get(`${URL_BASE}/pessoas/nome/${this.state.filtro.nome}`)
+    .then(resp => {
+      const resultado = resp.data
+      if(resultado.length === 0) {
+        showMsgError('Não foi encontrado resultado que atenda os parametros da pesquisa.')
+      }
+      this.setState({pessoas:resultado})
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
 
   carregarPessoa() {
+    console.log("aqui ",this.state.filtro.cpf)
     if(this.state.filtro.cpf !=='') {
       this.recuperarPessoaPorCpf()
+      return
+    }
+    this.recuperarPessoaPorNome()    
+  }
+
+  efetuarConsultaPeloEnter = (event) => {
+   console.log('event',event)
+    if (event.key === 'Enter') {
+      this.carregarPessoa()
     }
   }
 
+  limpar() {
+    console.log("limpar")
+    const { filtro } = this.state;
+    filtro['nome'] = ''
+    filtro['cpf'] = ''
+    this.setState({filtro:filtro})
+    console.log('filtro',this.state.filtro)
+  }
 
-   onChange(nomeCampo, evento) {
+  onChange(nomeCampo, evento) {
     const { filtro } = this.state;
     filtro[nomeCampo] = evento.target.value
     this.setState({filtro:filtro})
-    console.log('Value ',filtro)
-
   }
 
   render() {
-    const {classes} = this.props
+    const { classes } = this.props
+    const { filtro } = this.state
+    
     return ( 
       <div>
       <Card className={classes.card}>
@@ -86,7 +133,9 @@ class CadastroPessoa extends Component {
                <Cpf id="outlined-full-width" 
                     margin="normal"
                     className={classes.inputCpf}
-                    label="CPF" 
+                    label="CPF"
+                    value={filtro.cpf}
+                    disabled={this.state.filtro.nome !==''} 
                     onChange={this.onChange.bind(this,'cpf')}
                     autoFocus 
                     placeholder='Digite o cpf'
@@ -98,6 +147,7 @@ class CadastroPessoa extends Component {
                     id="outlined-full-width"
                     onChange={this.onChange.bind(this,'nome')}
                     label="Nome"
+                    value={filtro.nome}
                     className={classes.input}
                     placeholder="Entre com partes do nome"
                     fullWidth
@@ -106,10 +156,10 @@ class CadastroPessoa extends Component {
             </Grid>
 
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" className={classes.button} onClick={this.carregarPessoa.bind(this)}>
+              <Button variant="contained" color="primary" className={classes.button} onClick={this.carregarPessoa.bind(this)} onKeyPress={this.efetuarConsultaPeloEnter}>
                 Pesquisar
               </Button>
-              <Button variant="contained" className={classes.button}>
+              <Button variant="contained" className={classes.button} onClick={this.limpar.bind(this)}>
                 Cancelar
               </Button>
             </Grid> 
