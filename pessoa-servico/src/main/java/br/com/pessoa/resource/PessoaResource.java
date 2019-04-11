@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value= "/pessoa")
+@RequestMapping(value= "/pessoas")
 public class PessoaResource {
 
 
@@ -31,6 +31,13 @@ public class PessoaResource {
     @GetMapping("/nome/{nome}")
     public List<Pessoa> recuperPessoaPorNome(@PathVariable ("nome") String nome) {
         return pessoaService.recuperarPessoaPorNome(nome);
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("")
+    public List<Pessoa> recuperPessoaPorNome() {
+        return pessoaService.recuperarTodas();
     }
 
 

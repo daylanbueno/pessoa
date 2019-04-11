@@ -26,5 +26,8 @@ public class PessoaService {
         return pessoaRepository.recuperarPessoaPorNome(nome.toLowerCase());
     }
 
+    public List<Pessoa> recuperarTodas() {
+        return pessoaRepository.findAll();
+    }
 
 }
