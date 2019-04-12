@@ -87,23 +87,25 @@ class CadastroPessoa extends Component {
   }
 
   carregarPessoa() {
-    console.log("aqui ",this.state.filtro.cpf)
     if(this.state.filtro.cpf !=='') {
       this.recuperarPessoaPorCpf()
       return
     }
-    this.recuperarPessoaPorNome()    
+    if(this.state.filtro.nome !=='') {
+      this.recuperarPessoaPorNome()
+      return
+    }
+    this.recuperarTodas()    
   }
 
   efetuarConsultaPeloEnter = (event) => {
-   console.log('event',event)
-    if (event.key === 'Enter') {
-      this.carregarPessoa()
-    }
+    console.log("enter")
+    // if (event.key === 'Enter') {
+    //   this.carregarPessoa()
+    // }
   }
 
   limpar() {
-    console.log("limpar")
     const { filtro } = this.state;
     filtro['nome'] = ''
     filtro['cpf'] = ''
