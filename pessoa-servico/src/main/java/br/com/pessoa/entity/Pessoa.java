@@ -2,6 +2,7 @@ package br.com.pessoa.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -11,6 +12,7 @@ public class Pessoa implements Serializable {
     private Integer id;
 
     private String nomeCompleto;
+    private LocalDate dataNascimento;
 
     private String cpf;
 
@@ -81,5 +83,13 @@ public class Pessoa implements Serializable {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }
