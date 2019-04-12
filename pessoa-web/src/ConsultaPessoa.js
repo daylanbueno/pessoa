@@ -13,6 +13,7 @@ import  { URL_BASE } from './util/Url'
 import axios from 'axios'
 import { showMsgError } from './util/Menssages';
 
+
 const styles = {
   card: {
     minWidth: 250,
@@ -38,7 +39,7 @@ class CadastroPessoa extends Component {
    state = {
     filtro:{
       nome:'',
-      cpf:''
+      cpf:'',
     },
     pessoas:[]
    }

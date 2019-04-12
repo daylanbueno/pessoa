@@ -33,6 +33,13 @@ public class PessoaResource {
         return pessoaService.recuperarPessoaPorNome(nome);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/id/{id}")
+    public Pessoa recuperPessoaPorNome(@PathVariable ("id") Integer id) {
+        return pessoaService.recuperarPessoaPorId(id);
+    }
+
+
 
     @CrossOrigin(origins = "*")
     @GetMapping("")

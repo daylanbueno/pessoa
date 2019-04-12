@@ -10,13 +10,14 @@ import {ic_mode_edit} from 'react-icons-kit/md/ic_mode_edit'
 import { Button } from '@material-ui/core';
 import { Icon } from 'react-icons-kit'
 import {ic_delete} from 'react-icons-kit/md/ic_delete'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
     width: '100%',
     height: 400,
     overflow: 'auto',  
-  },
+  },  
   table: {
     minWidth: 100,
     overflow: 'auto'
@@ -50,7 +51,7 @@ class TabelaResultadoPessoa extends React.Component {
                     {row.contato.telefone}
                   </TableCell>
                   <TableCell>
-                    <Button>  
+                    <Button component={Link}  to={`/cadastro?idPessoa=${row.id}`} >  
                       <Icon icon={ic_mode_edit} ></Icon>
                     </Button>
                     <Button>

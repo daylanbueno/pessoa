@@ -2,10 +2,12 @@ package br.com.pessoa.service;
 
 import br.com.pessoa.entity.Pessoa;
 import br.com.pessoa.repository.PessoaRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -28,6 +30,10 @@ public class PessoaService {
 
     public List<Pessoa> recuperarTodas() {
         return pessoaRepository.findAll();
+    }
+
+    public Pessoa recuperarPessoaPorId(Integer id) {
+        return pessoaRepository.findById(id).get();
     }
 
 }

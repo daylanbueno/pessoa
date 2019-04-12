@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import  { URL_BASE } from './util/Url'
 import { showMsgSuccess } from './util/Menssages'
+import queryString from 'query-string'
 
 const styles = {  
   card: {
@@ -42,6 +43,7 @@ const styles = {
 class CadastroPessoa extends Component {
 
   state = {
+    idPessoa: queryString.parse(this.props.location.search).idPessoa,
     municipios:[],
     codEstado:'',
     form:{
@@ -58,7 +60,25 @@ class CadastroPessoa extends Component {
         municipio:''
         }
     }
+
+  componentDidMount() {
+    const { idPessoa } = this.state
+    if (idPessoa !== undefined) {
+      this.recuperarPessoaParaEdicao(idPessoa);
+    }
+  }  
   
+  recuperarPessoaParaEdicao(idPesso) {
+    axios.get(`${URL_BASE}/pessoas/id/${idPesso}`)
+    .then(resp => {
+      const pessoa = resp.data
+      this.popularDadosPessoaParaEdicao(pessoa)
+      console.log('Pessoa ',resp.data)
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
   recuperarMunicipioPorCodEstado(cod){
     this.setState({codEstado:cod})
     axios.get(`${URL_BASE}/municipios/${cod}`)
@@ -95,6 +115,23 @@ class CadastroPessoa extends Component {
     form['numero'] = ''
     form['sexo'] = ''
     this.setState({codEstado:''})
+    this.setState({form:form})
+  }
+
+  popularDadosPessoaParaEdicao(pessoa) {
+    const { form } = this.state;
+    form['cpf'] = pessoa.cpf
+    form['dataNascimento'] = pessoa.dataNascimento
+    form['nomeCompleto'] = pessoa.nomeCompleto
+    form['email'] = pessoa.contato.email
+    form['celular'] = pessoa.contato.celular
+    form['telefone'] = pessoa.contato.telefone
+    form['logradouro'] = pessoa.endereco.logradouro
+    form['municipio'] = pessoa.endereco.municipio
+    form['complemento'] = pessoa.endereco.complemento
+    form['numero'] =  pessoa.endereco.numero
+    form['sexo'] = pessoa.sexo
+    this.setState({codEstado:pessoa.endereco.municipio.estado.id})
     this.setState({form:form})
   }
 
