@@ -132,6 +132,7 @@ class CadastroPessoa extends Component {
     form['numero'] =  pessoa.endereco.numero
     form['sexo'] = pessoa.sexo
     this.setState({codEstado:pessoa.endereco.municipio.estado.id})
+    this.recuperarMunicipioPorCodEstado(this.state.codEstado)
     this.setState({form:form})
   }
 
@@ -160,7 +161,6 @@ class CadastroPessoa extends Component {
   }
 
   selecionaMunicipio(municipio) {
-    console.log('municipio selecionado ',municipio)
     const { form } = this.state;
     form['municipio'] = municipio
     this.setState({form:form})

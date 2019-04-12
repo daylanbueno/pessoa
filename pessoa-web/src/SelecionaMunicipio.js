@@ -37,6 +37,7 @@ class SimpleSelect extends React.Component {
   render() {
     const { classes } = this.props;
     console.log('Municípios: >',this.props.municipios)
+    console.log('Municipio selecionado ',this.props.municipio)
     return (
       <form autoComplete="off">
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
