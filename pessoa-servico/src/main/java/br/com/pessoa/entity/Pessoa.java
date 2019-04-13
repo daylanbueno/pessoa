@@ -12,6 +12,7 @@ public class Pessoa implements Serializable {
     private Integer id;
 
     private String nomeCompleto;
+
     private LocalDate dataNascimento;
 
     private String cpf;
