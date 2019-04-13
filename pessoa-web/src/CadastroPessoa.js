@@ -10,7 +10,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Cpf from './componentes/Cpf';
 import Celular from './componentes/Celular'
 import Telefone from './componentes/Telefone';
-import Data from './componentes/Data';
 import SelecionaEstado from './SelecionaEstado';
 import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
@@ -47,6 +46,7 @@ class CadastroPessoa extends Component {
     municipios:[],
     codEstado:'',
     form:{
+        id:null,
         cpf:'',
         dataNascimento:'',
         nomeCompleto:'',
@@ -60,24 +60,14 @@ class CadastroPessoa extends Component {
         municipio:''
         }
     }
-
-  componentDidMount() {
-    const { idPessoa } = this.state
-    if (idPessoa !== undefined) {
-      this.recuperarPessoaParaEdicao(idPessoa);
-    }
-  }  
   
-  recuperarPessoaParaEdicao(idPesso) {
-    axios.get(`${URL_BASE}/pessoas/id/${idPesso}`)
-    .then(resp => {
-      const pessoa = resp.data
-      this.popularDadosPessoaParaEdicao(pessoa)
-      console.log('Pessoa ',resp.data)
-    }).catch (e => {
-      console.log('Error: ',e)
-    })
-  }
+    componentDidMount() {
+      const { idPessoa } = this.state
+      if (idPessoa !== undefined) {
+        this.recuperarPessoaParaEdicao(idPessoa);
+      }
+    }  
+
 
   recuperarMunicipioPorCodEstado(cod){
     this.setState({codEstado:cod})
@@ -101,8 +91,40 @@ class CadastroPessoa extends Component {
     })
   }
 
+  recuperarPessoaParaEdicao(idPesso) {
+    axios.get(`${URL_BASE}/pessoas/id/${idPesso}`)
+    .then(resp => {
+      const pessoa = resp.data
+      this.popularDadosPessoaParaEdicao(pessoa)
+      console.log('Pessoa ',resp.data)
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
+  popularDadosPessoaParaEdicao(pessoa) {
+    const { form } = this.state;
+    form['id'] = pessoa.id
+    form['cpf'] = pessoa.cpf
+    form['dataNascimento'] = pessoa.dataNascimento
+    form['nomeCompleto'] = pessoa.nomeCompleto
+    form['email'] = pessoa.contato.email
+    form['celular'] = pessoa.contato.celular
+    form['telefone'] = pessoa.contato.telefone
+    form['logradouro'] = pessoa.endereco.logradouro
+    form['municipio'] = pessoa.endereco.municipio
+    form['complemento'] = pessoa.endereco.complemento
+    form['numero'] =  pessoa.endereco.numero
+    form['sexo'] = pessoa.sexo
+    this.setState({codEstado:pessoa.endereco.municipio.estado.id})
+    this.recuperarMunicipioPorCodEstado(this.state.codEstado)    
+    this.setState({form:form})
+  }
+
+
   limparCampos() {
     const { form } = this.state;
+    form['id'] = null
     form['cpf'] = ''
     form['dataNascimento'] = ''
     form['nomeCompleto'] = ''
@@ -118,28 +140,11 @@ class CadastroPessoa extends Component {
     this.setState({form:form})
   }
 
-  popularDadosPessoaParaEdicao(pessoa) {
-    const { form } = this.state;
-    form['cpf'] = pessoa.cpf
-    form['dataNascimento'] = pessoa.dataNascimento
-    form['nomeCompleto'] = pessoa.nomeCompleto
-    form['email'] = pessoa.contato.email
-    form['celular'] = pessoa.contato.celular
-    form['telefone'] = pessoa.contato.telefone
-    form['logradouro'] = pessoa.endereco.logradouro
-    form['municipio'] = pessoa.endereco.municipio
-    form['complemento'] = pessoa.endereco.complemento
-    form['numero'] =  pessoa.endereco.numero
-    form['sexo'] = pessoa.sexo
-    this.setState({codEstado:pessoa.endereco.municipio.estado.id})
-    this.recuperarMunicipioPorCodEstado(this.state.codEstado)
-    this.setState({form:form})
-  }
-
   criarParamentroPessoa() {
     const form = this.state.form
     console.log('form',form)
     let pessoa = {
+      id: form.id,
       cpf: form.cpf,
       dataNascimento:form.dataNascimento,
       nomeCompleto: form.nomeCompleto,
@@ -156,7 +161,7 @@ class CadastroPessoa extends Component {
         municipio:form.municipio
       }
     }
-    console.log('p',pessoa)
+    console.log('Pessoa param',pessoa)
     return pessoa
   }
 
@@ -164,12 +169,10 @@ class CadastroPessoa extends Component {
     const { form } = this.state;
     form['municipio'] = municipio
     this.setState({form:form})
-    console.log('form Municipio  ',this.state.form['municipio'])
   }
 
 
   selecionaSexo(sexo) {
-    console.log('sexo',sexo)
     const { form } = this.state;
     form['sexo'] = sexo
     this.setState({form:form})
@@ -179,7 +182,6 @@ class CadastroPessoa extends Component {
     const { form } = this.state;
     form[nomeCampo] = evento.target.value
     this.setState({form:form})
-    console.log('Value ',form)
 
   }
 
@@ -190,7 +192,7 @@ class CadastroPessoa extends Component {
       <div>
       <Card className={classes.card}>
         <Typography className={classes.titulo}  variant="display1" gutterBottom>
-            Dados pessoas
+            Dados da pessoa
         </Typography>
         <CardActions>
           <Grid container spacing={16}>
@@ -203,13 +205,20 @@ class CadastroPessoa extends Component {
                     label="CPF" 
                     autoFocus 
                     placeholder='Digite o cpf'
-                    variant='outlined's/>
-                <Data variant='outlined'
+                    variant='outlined'
+                    />
+                
+                <TextField
+                    type="date"
+                    defaultValue="2017-05-24"
+                    variant='outlined'
                     value={form.dataNascimento}
                     onChange={this.onChange.bind(this,'dataNascimento')}
-                    placeholder="exemplo 01/02/1993"
                     label='Data Nascimento'
-                    className={classes.input}/>     
+                    className={classes.input}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}/>     
             </Grid>
           
             <Grid item xs={10}>

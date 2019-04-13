@@ -12,6 +12,7 @@ import TabelaResultadoPessoa from './TabelaResultadoPessoa';
 import  { URL_BASE } from './util/Url'
 import axios from 'axios'
 import { showMsgError } from './util/Menssages';
+import If from './util/If';
 
 
 const styles = {
@@ -168,7 +169,9 @@ class CadastroPessoa extends Component {
             </Grid> 
 
             <Grid item xs={12}> 
+            <If test={this.state.pessoas.length > 0 }>
               <TabelaResultadoPessoa pessoas={this.state.pessoas}/>
+            </If>  
             </Grid>
           </Grid>
         </CardActions>
