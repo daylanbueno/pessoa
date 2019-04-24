@@ -13,6 +13,7 @@ import  { URL_BASE } from './util/Url'
 import axios from 'axios'
 import { showMsgError } from './util/Menssages';
 import If from './util/If';
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -166,6 +167,10 @@ class CadastroPessoa extends Component {
               <Button variant="contained" className={classes.button} onClick={this.limpar.bind(this)}>
                 Cancelar
               </Button>
+              <Button variant="contained" component={Link}  to={`/cadastro`}>
+                    Incluir Novo 
+               </Button>
+
             </Grid> 
 
             <Grid item xs={12}> 

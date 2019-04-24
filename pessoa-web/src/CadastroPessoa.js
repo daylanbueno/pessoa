@@ -15,8 +15,14 @@ import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import  { URL_BASE } from './util/Url'
-import { showMsgSuccess } from './util/Menssages'
+import { showMsgSuccess, showMsgError } from './util/Menssages'
 import queryString from 'query-string'
+import { Link } from 'react-router-dom'
+
+
+import { Icon } from 'react-icons-kit'
+import { checkCircle } from 'react-icons-kit/fa/checkCircle'
+import {search} from 'react-icons-kit/fa/search'
 
 const styles = {  
   card: {
@@ -82,6 +88,7 @@ class CadastroPessoa extends Component {
 
   salvarPessoa(){
     const param = this.criarParamentroPessoa()
+    this.validaCampos(param)
     axios.post(`${URL_BASE}/pessoas`,param)
     .then(resp => {
       this.limparCampos();
@@ -163,6 +170,42 @@ class CadastroPessoa extends Component {
     }
     console.log('Pessoa param',pessoa)
     return pessoa
+  }
+
+
+  validaCampos(pessoa) {
+    if (pessoa.cpf === '') {
+      showMsgError('O campo CPF é obrigatório!')
+      return
+    }
+    if (pessoa.dataNascimento === '') {
+      showMsgError('O campo Data Nascimento é obrigatório!')
+      return
+    }
+    if (pessoa.nomeCompleto === '') {
+      showMsgError('O campo Nome Completo é obrigatório!')
+      return
+    }
+    if (pessoa.sexo === '') {
+      showMsgError('O campo Sexo é obrigatório!')
+      return
+    }
+    if (pessoa.contato.email === '') {
+      showMsgError('O campo Email é obrigatório!')
+      return
+    }
+    if (pessoa.contato.celular === '') {
+      showMsgError('O campo Celular é obrigatório!')
+      return
+    }
+    if (pessoa.endereco.logradouro === '') {
+      showMsgError('O campo Logradouro é obrigatório!')
+      return
+    }
+    if (pessoa.endereco.municipio === '') {
+      showMsgError('O campo Município é obrigatório!')
+      return
+    }
   }
 
   selecionaMunicipio(municipio) {
@@ -317,10 +360,13 @@ class CadastroPessoa extends Component {
 
               <Grid item xs={12}>
                  <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarPessoa.bind(this)}>
-                    Cadastrar
+                    Cadastrar <Icon icon={checkCircle} ></Icon>
                   </Button>
                   <Button variant="contained" className={classes.button} onClick={this.limparCampos.bind(this)} >
-                    Cancelar
+                    Cancelar 
+                 </Button>
+                 <Button variant="contained" component={Link}  to={`/consulta`}>
+                    Pesquisar <Icon icon={search} ></Icon>
                  </Button>
               </Grid>             
           </Grid>
