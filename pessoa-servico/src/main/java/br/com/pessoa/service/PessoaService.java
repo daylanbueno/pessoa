@@ -2,6 +2,7 @@ package br.com.pessoa.service;
 
 import br.com.pessoa.entity.Pessoa;
 import br.com.pessoa.repository.PessoaRepository;
+import br.com.pessoa.service.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,11 @@ public class PessoaService {
     }
 
     public List<Pessoa>  recuperarPessoaPorCpf(String cpf) {
-        return pessoaRepository.recuperarPessoaPorCpf(cpf);
+        List<Pessoa> pessoas = pessoaRepository.recuperarPessoaPorCpf(cpf);
+        if(pessoas == null || pessoas.size() == 0) {
+            throw new ObjectNotFoundException("Objeto não encontrato!  Cpf: "+cpf);
+        }
+        return pessoas;
     }
 
     public List<Pessoa> recuperarPessoaPorNome(String nome) {
