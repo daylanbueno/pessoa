@@ -39,4 +39,8 @@ public class PessoaService {
         return pessoaRepository.findById(id).get();
     }
 
+    public void deleteById(Integer id) {
+        pessoaRepository.deleteById(id);
+    }
+
 }

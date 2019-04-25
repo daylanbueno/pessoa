@@ -39,6 +39,11 @@ public class PessoaResource {
         return pessoaService.recuperarPessoaPorId(id);
     }
 
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/id/{id}")
+    public void deleteById(@PathVariable ("id") Integer id) {
+         pessoaService.deleteById(id);
+    }
 
 
     @CrossOrigin(origins = "*")
