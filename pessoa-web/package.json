@@ -9,6 +9,7 @@
     "query-string": "^6.4.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-draggable": "^3.3.0",
     "react-icons-kit": "^1.2.1",
     "react-number-format": "^4.0.7",
     "react-redux": "^7.0.1",

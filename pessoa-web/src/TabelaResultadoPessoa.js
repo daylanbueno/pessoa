@@ -11,6 +11,7 @@ import { Button } from '@material-ui/core';
 import { Icon } from 'react-icons-kit'
 import {ic_delete} from 'react-icons-kit/md/ic_delete'
 import { Link } from 'react-router-dom'
+import ConfirmDialogComponent from './componentes/ConfirmDialogComponent';
 
 const styles = theme => ({
   root: {
@@ -26,9 +27,33 @@ const styles = theme => ({
 
 class TabelaResultadoPessoa extends React.Component {
  
+
+  state = {
+    msg:'',
+    tituloMsg:'',
+    open:'',
+    idPessoa:''
+  }
+
+  deletePessoaPorId(idPessoa) {
+    this.props.callbackDeletePessoa(idPessoa)
+  }
+
+  abrirDialogConfirmacao(id) {
+    this.setState({msg:'Deseja realmente excluir essa pessoa'})
+    this.setState({titulo:'Exclusão de pessoa'})
+    this.setState({open:true})
+    this.setState({idPessoa:id})
+  }
+
+  fecharDialogConfirmacao() {
+    this.setState({open:false})
+  }
+
   render() {
     const { classes, pessoas } = this.props;    
     return (
+      <div>
       <Paper className={classes.root} >
           <Table className={classes.table} 
            >
@@ -54,7 +79,7 @@ class TabelaResultadoPessoa extends React.Component {
                     <Button component={Link}  to={`/cadastro?idPessoa=${row.id}`} >  
                       <Icon icon={ic_mode_edit} ></Icon>
                     </Button>
-                    <Button>
+                    <Button onClick={this.abrirDialogConfirmacao.bind(this,row.id)} >
                       <Icon icon={ic_delete} ></Icon>
                     </Button>
                   </TableCell>
@@ -63,6 +88,13 @@ class TabelaResultadoPessoa extends React.Component {
             </TableBody>
           </Table>
       </Paper>
+      <ConfirmDialogComponent titulo={this.state.titulo}
+                              msg={this.state.msg}
+                              idPessoa={this.state.idPessoa}
+                              open={this.state.open}
+                              callbackFechaDialog={this.fecharDialogConfirmacao.bind(this)}
+                              callBackExcluirPessoa={this.deletePessoaPorId.bind(this)}/>
+      </div>
     );
   }
 }

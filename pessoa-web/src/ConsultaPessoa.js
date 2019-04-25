@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import TabelaResultadoPessoa from './TabelaResultadoPessoa';
 import  { URL_BASE } from './util/Url'
 import axios from 'axios'
-import { showMsgError } from './util/Menssages';
+import { showMsgError, showMsgSuccess } from './util/Menssages';
 import If from './util/If';
 import { Link } from 'react-router-dom'
 
@@ -101,11 +101,15 @@ class CadastroPessoa extends Component {
     this.recuperarTodas()    
   }
 
-  efetuarConsultaPeloEnter = (event) => {
-    console.log("enter")
-    // if (event.key === 'Enter') {
-    //   this.carregarPessoa()
-    // }
+  deletaPessoa(id){
+    console.log('id',id)
+    axios.delete(`${URL_BASE}/pessoas/id/${id}`)
+    .then(resp => {
+      showMsgSuccess('Operação realizada com sucesso!')
+      this.recuperarTodas()
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
   }
 
   limpar() {
@@ -175,7 +179,8 @@ class CadastroPessoa extends Component {
 
             <Grid item xs={12}> 
             <If test={this.state.pessoas.length > 0 }>
-              <TabelaResultadoPessoa pessoas={this.state.pessoas}/>
+              <TabelaResultadoPessoa pessoas={this.state.pessoas}
+                                     callbackDeletePessoa={this.deletaPessoa.bind(this)}/>
             </If>  
             </Grid>
           </Grid>
