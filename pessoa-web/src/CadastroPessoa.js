@@ -3,6 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import SelecionaSexo from './SelecionaSexo';
 import Card from '@material-ui/core/Card';
@@ -13,6 +15,8 @@ import Telefone from './componentes/Telefone';
 import SelecionaEstado from './SelecionaEstado';
 import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
+import RadioGroup from '@material-ui/core/RadioGroup';
+
 import axios from 'axios'
 import  { URL_BASE } from './util/Url'
 import { showMsgSuccess, showMsgError } from './util/Menssages'
@@ -52,6 +56,7 @@ class CadastroPessoa extends Component {
     municipios:[],
     codEstado:'',
     codMunicipio:'',
+    isPessoaFisica:true,
     form:{
         id:null,
         cpf:'',
@@ -88,7 +93,7 @@ class CadastroPessoa extends Component {
   }
 
   salvarPessoa(){
-    const param = this.criarParamentroPessoa()
+    const param = this.criarParamentroPessoaFisica()
     this.validaCampos(param)
     axios.post(`${URL_BASE}/pessoas`,param)
     .then(resp => {
@@ -150,7 +155,7 @@ class CadastroPessoa extends Component {
     this.setState({form:form})
   }
 
-  criarParamentroPessoa() {
+  criarParamentroPessoaFisica() {
     const form = this.state.form
     console.log('form',form)
     let pessoa = {
@@ -172,7 +177,6 @@ class CadastroPessoa extends Component {
         municipio:form.municipio
       }
     }
-    console.log('Pessoa param',pessoa)
     return pessoa
   }
 
@@ -233,6 +237,10 @@ class CadastroPessoa extends Component {
 
   }
 
+   handleChange(event) {
+    setValue(event.target.value);
+  }
+
   render() {
     const {classes} = this.props
     const { form } = this.state
@@ -244,6 +252,30 @@ class CadastroPessoa extends Component {
         </Typography>
         <CardActions>
           <Grid container spacing={16}>
+             {console.log('isPf',this.state.isPessoaFisica)}
+            <Grid item xs={12}> 
+            <RadioGroup
+                aria-label="gender"
+                name="gender2"
+                className={classes.group}
+                value={value}
+                onChange={handleChange}
+            >
+              <FormControlLabel
+                    value="male"
+                    control={<Radio color="primary" selectedValue={this.state.isPessoaFisica} />}
+                    label="Fisíca"
+                    labelPlacement="start">
+                </FormControlLabel>
+                <FormControlLabel
+                    value="male"
+                    control={<Radio color="primary" selectedValue={!this.state.isPessoaFisica} />}
+                    label="Juridíca"
+                    labelPlacement="start">
+                </FormControlLabel>
+              </RadioGroup>
+            </Grid>
+          
             <Grid item xs={12}> 
                <Cpf id="outlined-full-width" 
                     margin="normal"
@@ -272,7 +304,7 @@ class CadastroPessoa extends Component {
             <Grid item xs={10}>
                 <TextField
                     id="outlined-full-width"
-                    label="Nome completo"
+                    label="Nome/Razão Social"
                     value={form.nomeCompleto}
                     onChange={this.onChange.bind(this,'nomeCompleto')}
                     className={classes.input}
