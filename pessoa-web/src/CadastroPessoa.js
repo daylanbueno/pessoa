@@ -156,6 +156,7 @@ class CadastroPessoa extends Component {
     let pessoa = {
       id: form.id,
       cpf: form.cpf,
+      tipoPessoa:'FISICA',
       dataNascimento:form.dataNascimento,
       nomeCompleto: form.nomeCompleto,
       sexo:form.sexo,

@@ -7,7 +7,12 @@ import java.time.LocalDate;
 @Entity
 public class Pessoa implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Integer id;
 
@@ -16,10 +21,15 @@ public class Pessoa implements Serializable {
     private LocalDate dataNascimento;
 
     private String cpf;
+    
+    private String cnpj;
 
     @Enumerated(EnumType.STRING)
     private TipoSexo sexo;
-
+    
+    @Enumerated(EnumType.STRING)
+    private TipoPessoa tipoPessoa;
+    
     @JoinColumn(nullable =  false)
     @OneToOne(cascade = CascadeType.ALL)
     private Contato contato;
@@ -29,16 +39,21 @@ public class Pessoa implements Serializable {
     private Endereco endereco;
 
     public Pessoa() {}
+    
+	public Pessoa(String nomeCompleto, LocalDate dataNascimento, String cpf, String cnpj, TipoSexo sexo,
+			TipoPessoa tipoPessoa, Contato contato, Endereco endereco) {
+		super();
+		this.nomeCompleto = nomeCompleto;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.cnpj = cnpj;
+		this.sexo = sexo;
+		this.tipoPessoa = tipoPessoa;
+		this.contato = contato;
+		this.endereco = endereco;
+	}
 
-    public Pessoa(String nomeCompleto, String cpf, TipoSexo sexo, Contato contato, Endereco endereco) {
-        this.nomeCompleto = nomeCompleto;
-        this.cpf = cpf;
-        this.sexo = sexo;
-        this.contato = contato;
-        this.endereco = endereco;
-    }
-
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 
@@ -61,16 +76,33 @@ public class Pessoa implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+    
+    public String getCnpj() {
+		return cnpj;
+	}
 
-    public TipoSexo getSexo() {
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public TipoSexo getSexo() {
         return sexo;
     }
 
     public void setSexo(TipoSexo sexo) {
         this.sexo = sexo;
     }
+    
+    public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
+	}
 
-    public Contato getContato() {
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+
+	public Contato getContato() {
         return contato;
     }
 

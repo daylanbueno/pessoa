@@ -30,7 +30,7 @@ public class PessoaApplication implements CommandLineRunner {
 
 		Endereco endereco = new Endereco("Cond Residencial Conjunto c casa ","23","N/a",brasilia);
 		Contato contato = new Contato("daylansantos@gmail.com","32011632","6191602632");
-		Pessoa pessoa = new Pessoa("Dailan Bueno", "045.013.481-43",TipoSexo.MASCULINO,contato,endereco);
+		Pessoa pessoa = new Pessoa("Dailan Bueno", null, "045.013.481-43",null, TipoSexo.MASCULINO, TipoPessoa.FISICA,contato,endereco);
 		pessoaRepository.save(pessoa);
 	}
 }
