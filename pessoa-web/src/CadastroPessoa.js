@@ -19,10 +19,10 @@ import { showMsgSuccess, showMsgError } from './util/Menssages'
 import queryString from 'query-string'
 import { Link } from 'react-router-dom'
 
-
 import { Icon } from 'react-icons-kit'
 import { checkCircle } from 'react-icons-kit/fa/checkCircle'
 import {search} from 'react-icons-kit/fa/search'
+
 
 const styles = {  
   card: {
@@ -51,6 +51,7 @@ class CadastroPessoa extends Component {
     idPessoa: queryString.parse(this.props.location.search).idPessoa,
     municipios:[],
     codEstado:'',
+    codMunicipio:'',
     form:{
         id:null,
         cpf:'',
@@ -124,6 +125,7 @@ class CadastroPessoa extends Component {
     form['numero'] =  pessoa.endereco.numero
     form['sexo'] = pessoa.sexo
     this.setState({codEstado:pessoa.endereco.municipio.estado.id})
+    this.setState({codMunicipio:pessoa.endereco.municipio.id})
     this.recuperarMunicipioPorCodEstado(this.state.codEstado)    
     this.setState({form:form})
   }
@@ -143,7 +145,8 @@ class CadastroPessoa extends Component {
     form['complemento'] = ''
     form['numero'] = ''
     form['sexo'] = ''
-    this.setState({codEstado:''})
+    this.setState({codEstado:'', codMunicipio:''})
+
     this.setState({form:form})
   }
 
@@ -212,6 +215,7 @@ class CadastroPessoa extends Component {
     const { form } = this.state;
     form['municipio'] = municipio
     this.setState({form:form})
+    this.setState({codMunicipio:municipio.id})
   }
 
 
@@ -355,7 +359,7 @@ class CadastroPessoa extends Component {
                 <SelecionaEstado idEstado={this.state.codEstado} callbackSelecionaCodEstado={this.recuperarMunicipioPorCodEstado.bind(this)} />
              </Grid>
              <Grid item xs={3}>
-                <SelecionaMunicipio municipio={this.state.form['municipio']} municipios={this.state.municipios} callbackSelecionaMunicipio={this.selecionaMunicipio.bind(this)}/>
+                <SelecionaMunicipio idMunicipio={this.state.codMunicipio} municipio={this.state.form['municipio']} municipios={this.state.municipios} callbackSelecionaMunicipio={this.selecionaMunicipio.bind(this)}/>
              </Grid>
 
               <Grid item xs={12}>

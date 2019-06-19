@@ -25,19 +25,18 @@ class SimpleSelect extends React.Component {
     this.setState({
       labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
     });
-  
   }
 
   handleChange = event => {
     const  { municipios } = this.props
-    this.setState({ [event.target.name]: event.target.value });
+    const codMunicipio = event.target.value
+    this.setState({ [event.target.name]: codMunicipio });
     const municipio = municipios.find(item => item.id === event.target.value)
- 
     this.props.callbackSelecionaMunicipio(municipio)
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, municipios, idMunicipio } = this.props
     return (
       <form autoComplete="off">
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -49,7 +48,7 @@ class SimpleSelect extends React.Component {
             Município
           </InputLabel>
           <Select
-            value={this.props.municipio.id}
+            value={idMunicipio}
             onChange={this.handleChange}
             input={
               <OutlinedInput
@@ -62,7 +61,7 @@ class SimpleSelect extends React.Component {
           <MenuItem value="">
               <em>Seleciona o muncípio</em>
           </MenuItem>
-          {this.props.municipios.map(municipio => {
+          {municipios.map(municipio => {
             return(
               <MenuItem key={municipio.id} value={municipio.id}>{municipio.nome}</MenuItem>
             )

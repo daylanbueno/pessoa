@@ -48,8 +48,8 @@ class SimpleSelect extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const {estados} = this.state
+    const { classes, idEstado } = this.props
+    const { estados } = this.state
     return (
       <form  autoComplete="off" >
         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -60,8 +60,9 @@ class SimpleSelect extends React.Component {
             >
             Estado
           </InputLabel>
+          
           <Select
-            value={this.props.idEstado}
+            value={idEstado}
             onChange={this.handleChange}
             input={
               <OutlinedInput
