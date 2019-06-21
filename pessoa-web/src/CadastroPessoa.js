@@ -15,7 +15,6 @@ import Telefone from './componentes/Telefone';
 import SelecionaEstado from './SelecionaEstado';
 import SelecionaMunicipio from './SelecionaMunicipio';
 import Button from '@material-ui/core/Button';
-import RadioGroup from '@material-ui/core/RadioGroup';
 
 import axios from 'axios'
 import  { URL_BASE } from './util/Url'
@@ -30,7 +29,7 @@ import {search} from 'react-icons-kit/fa/search'
 
 const styles = {  
   card: {
-    height:650,
+    height:700,
     margin:20
   },
   input: {
@@ -237,8 +236,9 @@ class CadastroPessoa extends Component {
 
   }
 
-   handleChange(event) {
-    setValue(event.target.value);
+  handleChange(event) {
+    var isPessoaFisica = (event.target.value === "true")
+    this.setState({isPessoaFisica:isPessoaFisica})
   }
 
   render() {
@@ -252,28 +252,18 @@ class CadastroPessoa extends Component {
         </Typography>
         <CardActions>
           <Grid container spacing={16}>
-             {console.log('isPf',this.state.isPessoaFisica)}
             <Grid item xs={12}> 
-            <RadioGroup
-                aria-label="gender"
-                name="gender2"
-                className={classes.group}
-                value={value}
-                onChange={handleChange}
-            >
-              <FormControlLabel
-                    value="male"
-                    control={<Radio color="primary" selectedValue={this.state.isPessoaFisica} />}
-                    label="Fisíca"
-                    labelPlacement="start">
-                </FormControlLabel>
-                <FormControlLabel
-                    value="male"
-                    control={<Radio color="primary" selectedValue={!this.state.isPessoaFisica} />}
-                    label="Juridíca"
-                    labelPlacement="start">
-                </FormControlLabel>
-              </RadioGroup>
+            <FormControlLabel
+             label="Fisica"
+             control={<Radio checked={this.state.isPessoaFisica} onChange={this.handleChange.bind(this)} value="true"  color="primary"/>}
+             >
+            </FormControlLabel>
+            <FormControlLabel
+             label="Juridica"
+             control={<Radio checked={!this.state.isPessoaFisica} onChange={this.handleChange.bind(this)} value="false"  color="primary"/>}
+             >
+            </FormControlLabel>
+
             </Grid>
           
             <Grid item xs={12}> 
