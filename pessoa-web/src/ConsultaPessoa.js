@@ -128,7 +128,7 @@ class CadastroPessoa extends Component {
 
   render() {
     const { classes } = this.props
-    const { filtro } = this.state
+    const { filtro, isPessoaFisica } = this.state
     
     return ( 
       <div>

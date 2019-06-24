@@ -25,6 +25,8 @@ import { Link } from 'react-router-dom'
 import { Icon } from 'react-icons-kit'
 import { checkCircle } from 'react-icons-kit/fa/checkCircle'
 import {search} from 'react-icons-kit/fa/search'
+import Cnpj from './componentes/Cnpj';
+import If from './util/If';
 
 
 const styles = {  
@@ -39,6 +41,10 @@ const styles = {
     margin: 25
   },
   inputCpf: {
+    margin: 10,
+    width:400
+  },
+  inputCnpj: {
     margin: 10,
     width:400
   },
@@ -59,6 +65,7 @@ class CadastroPessoa extends Component {
     form:{
         id:null,
         cpf:'',
+        cnpj:'',
         dataNascimento:'',
         nomeCompleto:'',
         sexo:'',
@@ -92,7 +99,13 @@ class CadastroPessoa extends Component {
   }
 
   salvarPessoa(){
-    const param = this.criarParamentroPessoaFisica()
+    const { isPessoaFisica } = this.state
+    let param = ''
+    if(isPessoaFisica) {
+      param = this.criarParamentroPessoaFisica()
+    } else {
+      param = this.criarParamentroPessoaJuridica()
+    }
     this.validaCampos(param)
     axios.post(`${URL_BASE}/pessoas`,param)
     .then(resp => {
@@ -108,7 +121,6 @@ class CadastroPessoa extends Component {
     .then(resp => {
       const pessoa = resp.data
       this.popularDadosPessoaParaEdicao(pessoa)
-      console.log('Pessoa ',resp.data)
     }).catch (e => {
       console.log('Error: ',e)
     })
@@ -118,6 +130,7 @@ class CadastroPessoa extends Component {
     const { form } = this.state;
     form['id'] = pessoa.id
     form['cpf'] = pessoa.cpf
+    form['cnpj'] = pessoa.cnpj
     form['dataNascimento'] = pessoa.dataNascimento
     form['nomeCompleto'] = pessoa.nomeCompleto
     form['email'] = pessoa.contato.email
@@ -139,6 +152,7 @@ class CadastroPessoa extends Component {
     const { form } = this.state;
     form['id'] = null
     form['cpf'] = ''
+    form['cnpj'] = ''
     form['dataNascimento'] = ''
     form['nomeCompleto'] = ''
     form['email'] = ''
@@ -156,7 +170,6 @@ class CadastroPessoa extends Component {
 
   criarParamentroPessoaFisica() {
     const form = this.state.form
-    console.log('form',form)
     let pessoa = {
       id: form.id,
       cpf: form.cpf,
@@ -164,6 +177,28 @@ class CadastroPessoa extends Component {
       dataNascimento:form.dataNascimento,
       nomeCompleto: form.nomeCompleto,
       sexo:form.sexo,
+      contato: {
+        email:form.email,
+        celular:form.celular,
+        telefone:form.telefone,
+      },
+      endereco: {
+        logradouro:form.logradouro,
+        numero:form.numero,
+        complemento:form.complemento,
+        municipio:form.municipio
+      }
+    }
+    return pessoa
+  }
+
+  criarParamentroPessoaJuridica() {
+    const form = this.state.form
+    let pessoa = {
+      id: form.id,
+      cnpj: form.cnpj,
+      tipoPessoa:'JURIDICA',
+      nomeCompleto: form.nomeCompleto,
       contato: {
         email:form.email,
         celular:form.celular,
@@ -241,9 +276,42 @@ class CadastroPessoa extends Component {
     this.setState({isPessoaFisica:isPessoaFisica})
   }
 
+  renderCpfCnpj() {
+    const { isPessoaFisica , form } = this.state
+    const {classes} = this.props
+    if(isPessoaFisica) {
+      return (
+       <Cpf id="outlined-full-width" 
+          margin="normal"
+          className={classes.inputCpf}
+          value={form.cpf}
+          onChange={this.onChange.bind(this,'cpf')}
+          label="CPF" 
+          autoFocus 
+          placeholder='Digite o cpf'
+          variant='outlined'
+        />
+      )
+    } else {
+      return (
+        <Cnpj id="outlined-full-width" 
+          margin="normal"
+          className={classes.inputCnpj}
+          value={form.cnpj}
+          onChange={this.onChange.bind(this,'cnpj')}
+          label="CNPJ" 
+          autoFocus 
+          placeholder='Digite o cnpj'
+          variant='outlined'
+        />
+      )
+    }
+     
+  }
+
   render() {
     const {classes} = this.props
-    const { form } = this.state
+    const { form, isPessoaFisica } = this.state
     return ( 
       <div>
       <Card className={classes.card}>
@@ -267,28 +335,20 @@ class CadastroPessoa extends Component {
             </Grid>
           
             <Grid item xs={12}> 
-               <Cpf id="outlined-full-width" 
-                    margin="normal"
-                    className={classes.inputCpf}
-                    value={form.cpf}
-                    onChange={this.onChange.bind(this,'cpf')}
-                    label="CPF" 
-                    autoFocus 
-                    placeholder='Digite o cpf'
-                    variant='outlined'
-                    />
-                
-                <TextField
-                    type="date"
-                    defaultValue="2017-05-24"
-                    variant='outlined'
-                    value={form.dataNascimento}
-                    onChange={this.onChange.bind(this,'dataNascimento')}
-                    label='Data Nascimento'
-                    className={classes.input}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}/>     
+                {this.renderCpfCnpj()}
+                <If  test={isPessoaFisica}>    
+                  <TextField
+                      type="date"
+                      defaultValue="2017-05-24"
+                      variant='outlined'
+                      value={form.dataNascimento}
+                      onChange={this.onChange.bind(this,'dataNascimento')}
+                      label='Data Nascimento'
+                      className={classes.input}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}/>     
+                </If>      
             </Grid>
           
             <Grid item xs={10}>
@@ -304,9 +364,11 @@ class CadastroPessoa extends Component {
                     variant="outlined"/>
             </Grid>
 
-            <Grid item xs={2}>
-              <SelecionaSexo sexo={this.state.form['sexo']} callbackSelecionaSexo={this.selecionaSexo.bind(this)} />
-            </Grid>
+            <If  test={isPessoaFisica}>          
+              <Grid item xs={2} >
+                <SelecionaSexo sexo={this.state.form['sexo']} callbackSelecionaSexo={this.selecionaSexo.bind(this)} />
+              </Grid>
+            </If>
           
             <Grid item xs={6}>
                 <TextField
