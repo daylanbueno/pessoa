@@ -62,22 +62,8 @@ class CadastroPessoa extends Component {
     codEstado:'',
     codMunicipio:'',
     isPessoaFisica:true,
-    form:{
-        id:null,
-        cpf:'',
-        cnpj:'',
-        dataNascimento:'',
-        nomeCompleto:'',
-        sexo:'',
-        email:'',
-        celular:'',
-        telefone:'',
-        logradouro:'',
-        numero:'',
-        complemento:'',
-        municipio:''
-        }
-    }
+    form:{ id:null, cpf:'', cnpj:'', dataNascimento:'', nome:'',sexo:'', email:'', celular:'', telefone:'', logradouro:'', numero:'', complemento:'', municipio:''}
+  }
   
     componentDidMount() {
       const { idPessoa } = this.state
@@ -132,7 +118,7 @@ class CadastroPessoa extends Component {
     form['cpf'] = pessoa.cpf
     form['cnpj'] = pessoa.cnpj
     form['dataNascimento'] = pessoa.dataNascimento
-    form['nomeCompleto'] = pessoa.nomeCompleto
+    form['nome'] = pessoa.nome
     form['email'] = pessoa.contato.email
     form['celular'] = pessoa.contato.celular
     form['telefone'] = pessoa.contato.telefone
@@ -154,7 +140,7 @@ class CadastroPessoa extends Component {
     form['cpf'] = ''
     form['cnpj'] = ''
     form['dataNascimento'] = ''
-    form['nomeCompleto'] = ''
+    form['nome'] = ''
     form['email'] = ''
     form['celular'] = ''
     form['telefone'] = ''
@@ -175,7 +161,7 @@ class CadastroPessoa extends Component {
       cpf: form.cpf,
       tipoPessoa:'FISICA',
       dataNascimento:form.dataNascimento,
-      nomeCompleto: form.nomeCompleto,
+      nome: form.nome,
       sexo:form.sexo,
       contato: {
         email:form.email,
@@ -198,7 +184,7 @@ class CadastroPessoa extends Component {
       id: form.id,
       cnpj: form.cnpj,
       tipoPessoa:'JURIDICA',
-      nomeCompleto: form.nomeCompleto,
+      nome: form.nome,
       contato: {
         email:form.email,
         celular:form.celular,
@@ -214,30 +200,26 @@ class CadastroPessoa extends Component {
     return pessoa
   }
 
-
   validaCampos(pessoa) {
+    const { isPessoaFisica }  = this.state
     if (pessoa.cpf === '') {
       showMsgError('O campo CPF é obrigatório!')
       return
     }
-    if (pessoa.dataNascimento === '') {
+    if (pessoa.dataNascimento === '' && isPessoaFisica ) {
       showMsgError('O campo Data Nascimento é obrigatório!')
       return
     }
-    if (pessoa.nomeCompleto === '') {
-      showMsgError('O campo Nome Completo é obrigatório!')
+    if (pessoa.nome === '') {
+      showMsgError('O campo Nome/Razão Social é obrigatório!')
       return
     }
-    if (pessoa.sexo === '') {
+    if (pessoa.sexo === '' && isPessoaFisica) {
       showMsgError('O campo Sexo é obrigatório!')
       return
     }
     if (pessoa.contato.email === '') {
       showMsgError('O campo Email é obrigatório!')
-      return
-    }
-    if (pessoa.contato.celular === '') {
-      showMsgError('O campo Celular é obrigatório!')
       return
     }
     if (pessoa.endereco.logradouro === '') {
@@ -256,7 +238,6 @@ class CadastroPessoa extends Component {
     this.setState({form:form})
     this.setState({codMunicipio:municipio.id})
   }
-
 
   selecionaSexo(sexo) {
     const { form } = this.state;
@@ -355,8 +336,8 @@ class CadastroPessoa extends Component {
                 <TextField
                     id="outlined-full-width"
                     label="Nome/Razão Social"
-                    value={form.nomeCompleto}
-                    onChange={this.onChange.bind(this,'nomeCompleto')}
+                    value={form.nome}
+                    onChange={this.onChange.bind(this,'nome')}
                     className={classes.input}
                     placeholder="Entre com o nome completo"
                     fullWidth

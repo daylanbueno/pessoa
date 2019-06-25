@@ -61,7 +61,7 @@ class TabelaResultadoPessoa extends React.Component {
               {pessoas.map(row => (
                 <TableRow key={row.id}>
                   <TableCell>
-                    {row.nomeCompleto}
+                    {row.nome}
                   </TableCell>
                   <TableCell>
                     {row.contato.email}

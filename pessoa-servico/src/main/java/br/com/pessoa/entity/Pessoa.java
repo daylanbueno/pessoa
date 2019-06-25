@@ -16,7 +16,7 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Integer id;
 
-    private String nomeCompleto;
+    private String nome;
 
     private LocalDate dataNascimento;
 
@@ -40,10 +40,10 @@ public class Pessoa implements Serializable {
 
     public Pessoa() {}
     
-	public Pessoa(String nomeCompleto, LocalDate dataNascimento, String cpf, String cnpj, TipoSexo sexo,
+	public Pessoa(String nome, LocalDate dataNascimento, String cpf, String cnpj, TipoSexo sexo,
 			TipoPessoa tipoPessoa, Contato contato, Endereco endereco) {
 		super();
-		this.nomeCompleto = nomeCompleto;
+		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
 		this.cnpj = cnpj;
@@ -61,12 +61,12 @@ public class Pessoa implements Serializable {
         this.id = id;
     }
 
-    public String getNomeCompleto() {
-        return nomeCompleto;
+    public String getnome() {
+        return nome;
     }
 
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
+    public void setnome(String nome) {
+        this.nome = nome;
     }
 
     public String getCpf() {

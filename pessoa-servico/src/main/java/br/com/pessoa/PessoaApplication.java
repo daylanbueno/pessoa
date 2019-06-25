@@ -24,13 +24,20 @@ public class PessoaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
 		Estado distritoFederal = new Estado("Distrito Federal","DF");
 		Municipio brasilia = new Municipio("Brasília",distritoFederal);
 		municipioRepository.save(brasilia);
 
 		Endereco endereco = new Endereco("Cond Residencial Conjunto c casa ","23","N/a",brasilia);
 		Contato contato = new Contato("daylansantos@gmail.com","32011632","6191602632");
-		Pessoa pessoa = new Pessoa("Dailan Bueno", null, "045.013.481-43",null, TipoSexo.MASCULINO, TipoPessoa.FISICA,contato,endereco);
-		pessoaRepository.save(pessoa);
+		Pessoa pf = new Pessoa("DAILAN BUENO DOS SANTOS", null, "045.013.481-43",null, TipoSexo.MASCULINO, TipoPessoa.FISICA,contato,endereco);
+		
+		Contato contatoPj = new Contato("mr2inkjet@gmail.com","32011632","6191602632");
+
+		Endereco enderecoPj = new Endereco("CA 01 CONJUNTO F LOJA" ,"58","N/A",brasilia);
+		Pessoa pj = new Pessoa("MR2 INKJET LTDA", null, null,"78.460.600/0001-20", null, TipoPessoa.JURIDICA,contatoPj,enderecoPj);
+		pessoaRepository.save(pf);
+		pessoaRepository.save(pj);
 	}
 }
