@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import Cpf from './componentes/Cpf';
 import Button from '@material-ui/core/Button';
 import TabelaResultadoPessoa from './TabelaResultadoPessoa';
@@ -13,6 +15,7 @@ import  { URL_BASE } from './util/Url'
 import axios from 'axios'
 import { showMsgError, showMsgSuccess } from './util/Menssages';
 import If from './util/If';
+import Cnpj from './componentes/Cnpj';
 import { Link } from 'react-router-dom'
 
 
@@ -32,16 +35,21 @@ const styles = {
   inputCpf: {
     margin: 10,
     width:400
-
-  }
+  },
+  inputCnpj: {
+    margin: 10,
+    width:400
+  },
 };
 
 class CadastroPessoa extends Component {
 
    state = {
+    isPessoaFisica:true,
     filtro:{
       nome:'',
       cpf:'',
+      cnpj:''
     },
     pessoas:[]
    }
@@ -51,11 +59,9 @@ class CadastroPessoa extends Component {
    }
 
    recuperarPessoaPorCpf() {
-    console.log('consultando')
     axios.get(`${URL_BASE}/pessoas/cpf/${this.state.filtro.cpf}`)
     .then(resp => {
       const resultado = resp.data
-      console.log('resutado',resultado)
       if(resultado.length === 0 ) {
         showMsgError('Não foi encontrado resultado que atenda os parametros da pesquisa.')
       }
@@ -65,7 +71,21 @@ class CadastroPessoa extends Component {
     })
   }
 
-  recuperarTodas() {
+  recuperarPessoaPorCnpj() {
+    const cnpj = this.state.filtro.cnpj
+    axios.get(`${URL_BASE}/pessoas/cnpj/?cnpj=${cnpj}`,)
+    .then(resp => {
+      const resultado = resp.data
+      if(resultado.length === 0 ) {
+        showMsgError('Não foi encontrado resultado que atenda os parametros da pesquisa.')
+      }
+      this.setState({pessoas:resultado})
+    }).catch (e => {
+      console.log('Error: ',e)
+    })
+  }
+
+  recuperarTodas() {  
     axios.get(`${URL_BASE}/pessoas`)
     .then(resp => {
       const resultado = resp.data
@@ -90,8 +110,13 @@ class CadastroPessoa extends Component {
   }
 
   carregarPessoa() {
-    if(this.state.filtro.cpf !=='') {
+    const { isPessoaFisica } = this.state
+    if(this.state.filtro.cpf !=='' && isPessoaFisica) {
       this.recuperarPessoaPorCpf()
+      return
+    }
+    if(this.state.filtro.cnpj !==''  && !isPessoaFisica) {
+      this.recuperarPessoaPorCnpj()
       return
     }
     if(this.state.filtro.nome !=='') {
@@ -102,7 +127,6 @@ class CadastroPessoa extends Component {
   }
 
   deletaPessoa(id){
-    console.log('id',id)
     axios.delete(`${URL_BASE}/pessoas/id/${id}`)
     .then(resp => {
       showMsgSuccess('Operação realizada com sucesso!')
@@ -116,8 +140,8 @@ class CadastroPessoa extends Component {
     const { filtro } = this.state;
     filtro['nome'] = ''
     filtro['cpf'] = ''
+    filtro['cnpj'] = ''
     this.setState({filtro:filtro})
-    console.log('filtro',this.state.filtro)
   }
 
   onChange(nomeCampo, evento) {
@@ -126,9 +150,48 @@ class CadastroPessoa extends Component {
     this.setState({filtro:filtro})
   }
 
+  renderCpfCnpj() {
+    const { filtro, isPessoaFisica  } = this.state
+    const {classes} = this.props
+    if(isPessoaFisica) {
+      return (
+        <Cpf id="outlined-full-width" 
+          margin="normal"
+          className={classes.inputCpf}
+          label="CPF"
+          value={filtro.cpf}
+          disabled={filtro.nome !==''} 
+          onChange={this.onChange.bind(this,'cpf')}
+          autoFocus 
+          placeholder='Digite o cpf'
+          variant='outlined'/> 
+      )
+    } else {
+      return (
+        <Cnpj id="outlined-full-width" 
+          margin="normal"
+          className={classes.inputCnpj}
+          value={filtro.cnpj}
+          onChange={this.onChange.bind(this,'cnpj')}
+          label="CNPJ" 
+          autoFocus 
+          placeholder='Digite o cnpj'
+          variant='outlined'
+        />
+      )
+    }
+  }
+  
+  handleChange(event) {
+    var isPessoaFisica = (event.target.value === "true")
+    this.setState({isPessoaFisica:isPessoaFisica})
+    this.limpar()
+  }
+
+
   render() {
     const { classes } = this.props
-    const { filtro, isPessoaFisica } = this.state
+    const { filtro } = this.state
     
     return ( 
       <div>
@@ -139,16 +202,20 @@ class CadastroPessoa extends Component {
         <CardActions>
           <Grid container spacing={24}>
             <Grid item xs={12}> 
-               <Cpf id="outlined-full-width" 
-                    margin="normal"
-                    className={classes.inputCpf}
-                    label="CPF"
-                    value={filtro.cpf}
-                    disabled={this.state.filtro.nome !==''} 
-                    onChange={this.onChange.bind(this,'cpf')}
-                    autoFocus 
-                    placeholder='Digite o cpf'
-                    variant='outlined'/>
+                <FormControlLabel
+                label="Fisica"
+                control={<Radio checked={this.state.isPessoaFisica} onChange={this.handleChange.bind(this)} value="true"  color="primary"/>}
+                >
+                </FormControlLabel>
+                <FormControlLabel
+                label="Juridica"
+                control={<Radio checked={!this.state.isPessoaFisica} onChange={this.handleChange.bind(this)} value="false"  color="primary"/>}
+                >
+                </FormControlLabel>
+            </Grid>
+
+            <Grid item xs={12}> 
+               {this.renderCpfCnpj()}
             </Grid>
           
             <Grid item xs={10}>

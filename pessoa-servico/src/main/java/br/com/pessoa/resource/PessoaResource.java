@@ -28,6 +28,12 @@ public class PessoaResource {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/cnpj")
+    public List<Pessoa> recuperarPessoaPorCnpj(@RequestParam String cnpj) {
+        return pessoaService.recuperarPessoaPorCnpj(cnpj);
+    }
+    
+    @CrossOrigin(origins = "*")
     @GetMapping("/nome/{nome}")
     public List<Pessoa> recuperPessoaPorNome(@PathVariable ("nome") String nome) {
         return pessoaService.recuperarPessoaPorNome(nome);

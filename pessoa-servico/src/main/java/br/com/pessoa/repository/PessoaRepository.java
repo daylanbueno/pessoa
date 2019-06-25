@@ -11,6 +11,9 @@ public interface PessoaRepository extends JpaRepository<Pessoa,Integer> {
     @Query(value = "SELECT p FROM Pessoa p WHERE p.cpf = :cpf")
     public List<Pessoa> recuperarPessoaPorCpf(String cpf);
 
+    @Query(value = "SELECT p FROM Pessoa p WHERE p.cnpj = :cnpj")
+    public List<Pessoa> recuperarPessoaPorCnpj(String cnpj);
+
     @Query(value = "SELECT p FROM Pessoa p WHERE  lower(p.nome)  like %:nome%")
     public List<Pessoa> recuperarPessoaPorNome(String nome);
 

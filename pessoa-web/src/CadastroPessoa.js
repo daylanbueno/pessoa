@@ -92,7 +92,9 @@ class CadastroPessoa extends Component {
     } else {
       param = this.criarParamentroPessoaJuridica()
     }
-    this.validaCampos(param)
+    if(!this.validaCampos(param)) {
+      return
+    }
     axios.post(`${URL_BASE}/pessoas`,param)
     .then(resp => {
       this.limparCampos();
@@ -131,6 +133,7 @@ class CadastroPessoa extends Component {
     this.setState({codMunicipio:pessoa.endereco.municipio.id})
     this.recuperarMunicipioPorCodEstado(this.state.codEstado)    
     this.setState({form:form})
+    this.setState({isPessoaFisica: pessoa.tipoPessoa ==='FISICA' ? true: false})
   }
 
 
@@ -204,32 +207,33 @@ class CadastroPessoa extends Component {
     const { isPessoaFisica }  = this.state
     if (pessoa.cpf === '') {
       showMsgError('O campo CPF é obrigatório!')
-      return
+      return false
     }
     if (pessoa.dataNascimento === '' && isPessoaFisica ) {
       showMsgError('O campo Data Nascimento é obrigatório!')
-      return
+      return false
     }
     if (pessoa.nome === '') {
       showMsgError('O campo Nome/Razão Social é obrigatório!')
-      return
+      return false
     }
     if (pessoa.sexo === '' && isPessoaFisica) {
       showMsgError('O campo Sexo é obrigatório!')
-      return
+      return false
     }
     if (pessoa.contato.email === '') {
       showMsgError('O campo Email é obrigatório!')
-      return
+      return false
     }
     if (pessoa.endereco.logradouro === '') {
       showMsgError('O campo Logradouro é obrigatório!')
-      return
+      return false
     }
     if (pessoa.endereco.municipio === '') {
       showMsgError('O campo Município é obrigatório!')
-      return
+      return false
     }
+    return true
   }
 
   selecionaMunicipio(municipio) {

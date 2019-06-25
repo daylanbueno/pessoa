@@ -27,6 +27,14 @@ public class PessoaService {
         return pessoas;
     }
 
+    public List<Pessoa>  recuperarPessoaPorCnpj(String cnpj) {
+        List<Pessoa> pessoas = pessoaRepository.recuperarPessoaPorCnpj(cnpj);
+        if(pessoas == null || pessoas.size() == 0) {
+            throw new ObjectNotFoundException("Objeto não encontrato!  cnpj: "+cnpj);
+        }
+        return pessoas;
+    }
+    
     public List<Pessoa> recuperarPessoaPorNome(String nome) {
         return pessoaRepository.recuperarPessoaPorNome(nome.toLowerCase());
     }
