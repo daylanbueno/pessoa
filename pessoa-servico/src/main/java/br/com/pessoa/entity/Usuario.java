@@ -33,6 +33,11 @@ public class Usuario implements Serializable {
 	@JoinColumn(nullable = false)
 	private Pessoa pessoa;
 	
+	
+	public Usuario() {
+		super();
+	}
+	
 	public Usuario(String login, String  senha, Pessoa pessoa, TipoPerfil tipoPerfil) {
 		super();
 		this.login = login;
