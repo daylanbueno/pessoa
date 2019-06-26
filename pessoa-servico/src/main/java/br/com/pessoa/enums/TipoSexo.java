@@ -1,4 +1,4 @@
-package br.com.pessoa.entity;
+package br.com.pessoa.enums;
 
 public enum TipoSexo {
 

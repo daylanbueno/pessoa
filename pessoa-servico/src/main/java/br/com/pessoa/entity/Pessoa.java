@@ -1,6 +1,10 @@
 package br.com.pessoa.entity;
 
 import javax.persistence.*;
+
+import br.com.pessoa.enums.TipoPessoa;
+import br.com.pessoa.enums.TipoSexo;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 

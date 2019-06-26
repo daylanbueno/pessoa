@@ -3,10 +3,14 @@ package br.com.pessoa.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import br.com.pessoa.enums.TipoPerfil;
 
 @Entity
 public class Usuario implements Serializable {
@@ -21,15 +25,20 @@ public class Usuario implements Serializable {
 	private String login;
 	private String senha;
 	
+	@Enumerated(EnumType.STRING)
+	private TipoPerfil tipoPerfil;
+	
+	
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Pessoa pessoa;
 	
-	public Usuario(String login, String  senha, Pessoa pessoa) {
+	public Usuario(String login, String  senha, Pessoa pessoa, TipoPerfil tipoPerfil) {
 		super();
 		this.login = login;
 		this.senha = senha;
 		this.pessoa = pessoa;
+		this.tipoPerfil = tipoPerfil;
 	}
 	public Integer getId() {
 		return id;
@@ -54,6 +63,14 @@ public class Usuario implements Serializable {
 	}
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	
+	public TipoPerfil getTipoPerfil() {
+		return tipoPerfil;
+	}
+	
+	public void setTipoPerfil(TipoPerfil tipoPerfil) {
+		this.tipoPerfil = tipoPerfil;
 	}
 	
 	@Override

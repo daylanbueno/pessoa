@@ -1,16 +1,23 @@
 package br.com.pessoa;
 
-import br.com.pessoa.entity.*;
-import br.com.pessoa.repository.MunicipioRepository;
-import br.com.pessoa.repository.PessoaRepository;
-import br.com.pessoa.repository.UsuarioRepository;
-
-import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import br.com.pessoa.entity.Contato;
+import br.com.pessoa.entity.Endereco;
+import br.com.pessoa.entity.Estado;
+import br.com.pessoa.entity.Municipio;
+import br.com.pessoa.entity.Pessoa;
+import br.com.pessoa.entity.Usuario;
+import br.com.pessoa.enums.TipoPerfil;
+import br.com.pessoa.enums.TipoPessoa;
+import br.com.pessoa.enums.TipoSexo;
+import br.com.pessoa.repository.MunicipioRepository;
+import br.com.pessoa.repository.PessoaRepository;
+import br.com.pessoa.repository.UsuarioRepository;
 
 @SpringBootApplication
 public class PessoaApplication implements CommandLineRunner {
@@ -51,7 +58,7 @@ public class PessoaApplication implements CommandLineRunner {
 		pessoaRepository.save(pj);
 		
 		Pessoa  p = pessoaRepository.recuperarPessoaPorCpf("045.013.481-43").get(0);
-		Usuario user = new Usuario("dbsantos", passwordEncoder.encode("123"), p);
+		Usuario user = new Usuario("dbsantos", passwordEncoder.encode("123"),p,TipoPerfil.ROLE_ADMIN);
 		
 		usuarioRepository.save(user);
 	}
