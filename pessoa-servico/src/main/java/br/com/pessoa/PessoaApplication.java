@@ -3,10 +3,14 @@ package br.com.pessoa;
 import br.com.pessoa.entity.*;
 import br.com.pessoa.repository.MunicipioRepository;
 import br.com.pessoa.repository.PessoaRepository;
+import br.com.pessoa.repository.UsuarioRepository;
+
+import org.apache.tomcat.jni.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class PessoaApplication implements CommandLineRunner {
@@ -16,7 +20,13 @@ public class PessoaApplication implements CommandLineRunner {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
-
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(PessoaApplication.class, args);
@@ -39,5 +49,10 @@ public class PessoaApplication implements CommandLineRunner {
 		Pessoa pj = new Pessoa("MR2 INKJET LTDA", null, null,"78.460.600/0001-20", null, TipoPessoa.JURIDICA,contatoPj,enderecoPj);
 		pessoaRepository.save(pf);
 		pessoaRepository.save(pj);
+		
+		Pessoa  p = pessoaRepository.recuperarPessoaPorCpf("045.013.481-43").get(0);
+		Usuario user = new Usuario("dbsantos", passwordEncoder.encode("123"), p);
+		
+		usuarioRepository.save(user);
 	}
 }
