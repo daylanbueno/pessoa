@@ -15,6 +15,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.pessoa.security.JWTAuthorizationFilter;
 import br.com.pessoa.security.JwtAuthenticationFilter;
 import br.com.pessoa.security.JwtUtil;
 
@@ -33,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 	
 	private static final String [] PUBLIC_MACHES_GET = {
-			"/pessoas/**",
 			"/estados/**",
 			"/municipios/**"
 	};
@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(PUBLIC_MACHES).permitAll()
 		.anyRequest().authenticated();
 		http.addFilter(new JwtAuthenticationFilter(authenticationManager(),jwtutil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtutil,userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // meu servico não vai criar sessão para usuário.
 	}
 	
