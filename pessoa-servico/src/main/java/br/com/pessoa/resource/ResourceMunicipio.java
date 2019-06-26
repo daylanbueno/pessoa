@@ -15,7 +15,6 @@ public class ResourceMunicipio {
     private MunicipioService municipioService;
 
     @GetMapping("/{idEstado}")
-    @CrossOrigin(origins = "*")
     public List<Municipio> recuperarMunicipios(@PathVariable  Integer idEstado){
         return  municipioService.recuperaMunicipio(idEstado);
     }

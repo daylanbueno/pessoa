@@ -15,44 +15,37 @@ public class PessoaResource {
     @Autowired
     private PessoaService pessoaService;
 
-    @CrossOrigin(origins = "*")
     @PostMapping
     public void salvar(@RequestBody Pessoa pessoa) {
         pessoaService.salvarPessoa(pessoa);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/cpf/{cpf}")
     public List<Pessoa> recuperarPessoaPorCpf(@PathVariable ("cpf") String cpf) {
         return pessoaService.recuperarPessoaPorCpf(cpf);
     }
 
-    @CrossOrigin(origins = "*")
+   
     @GetMapping("/cnpj")
     public List<Pessoa> recuperarPessoaPorCnpj(@RequestParam String cnpj) {
         return pessoaService.recuperarPessoaPorCnpj(cnpj);
     }
     
-    @CrossOrigin(origins = "*")
     @GetMapping("/nome/{nome}")
     public List<Pessoa> recuperPessoaPorNome(@PathVariable ("nome") String nome) {
         return pessoaService.recuperarPessoaPorNome(nome);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping("/id/{id}")
     public Pessoa recuperPessoaPorNome(@PathVariable ("id") Integer id) {
         return pessoaService.recuperarPessoaPorId(id);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/id/{id}")
     public void deleteById(@PathVariable ("id") Integer id) {
          pessoaService.deleteById(id);
     }
 
-
-    @CrossOrigin(origins = "*")
     @GetMapping("")
     public List<Pessoa> recuperPessoaPorNome() {
         return pessoaService.recuperarTodas();

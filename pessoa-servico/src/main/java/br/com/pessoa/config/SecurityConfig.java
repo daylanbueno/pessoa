@@ -1,0 +1,48 @@
+package br.com.pessoa.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private static final String [] PUBLIC_MACHES = {
+			"/h2-console/**"
+	};
+	
+	private static final String [] PUBLIC_MACHES_GET = {
+			"/pessoas/**",
+			"/estados/**",
+			"/municipios/**"
+	};
+	
+	/**
+	 * Método responsável por controlar o acesso  para os recursos. 
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.headers().frameOptions().disable(); // liberando acesso ao h2
+		http.cors() // especifica que vou usar configuração de cors origin  que eu definir
+	    .and().csrf().disable(); 
+		http.authorizeRequests().antMatchers(HttpMethod.GET ,PUBLIC_MACHES_GET).permitAll()
+		.antMatchers(PUBLIC_MACHES).permitAll()
+		.anyRequest().authenticated();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // meu servico não vai criar sessão para usuário.
+	}
+	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source =  new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		return  source;
+	}
+}

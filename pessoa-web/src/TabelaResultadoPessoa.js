@@ -67,7 +67,7 @@ class TabelaResultadoPessoa extends React.Component {
                     {row.contato.email}
                   </TableCell>
                   <TableCell >
-                    {row.cpf}
+                      {row.tipoPessoa === 'FISICA' ? row.cpf :row.cnpj}
                   </TableCell>
                   <TableCell>
                     {row.contato.celular}
