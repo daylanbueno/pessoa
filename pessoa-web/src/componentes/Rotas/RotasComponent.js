@@ -4,6 +4,7 @@ import Home from '../HomeComponent'
 import CadastroPessoa from '../../CadastroPessoa';
 import ConsultaPessoa from '../../ConsultaPessoa';
 
+
 export default class RotasComponent extends Component {
     render() {
         return (
