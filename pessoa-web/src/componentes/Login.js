@@ -7,6 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+import  { URL_BASE } from '../util/Url'
+import axios from 'axios'
+import { showMsgError } from '../util/Menssages';
+
 import { efetuarLogin } from '../reducers/usuarioActions'
 
 import { connect } from 'react-redux'
@@ -41,6 +45,16 @@ class  Login extends Component {
         }
     }
 
+    logar() {
+        axios.post(`${URL_BASE}/login`,this.state.usuario)
+        .then(resp => {
+           this.props.efetuarLogin(true)
+        }).catch (e => {
+            showMsgError('Login ou senha invalida!')
+          console.log('Error: ',e)
+        })
+      }
+
     handleChange(nomeCampo,evento) {
        const { usuario } = this.state
        usuario[nomeCampo] = evento.target.value
@@ -49,7 +63,7 @@ class  Login extends Component {
     };
 
     render() {
-        const {classes, efetuarLogin} = this.props
+        const {classes} = this.props
         return (
             <Card className={classes.card}>
                 <CardContent>
@@ -79,7 +93,7 @@ class  Login extends Component {
                 </Typography>
                 </CardContent>
                 <CardActions>
-                 <Button onClick={()=> efetuarLogin(true)} className={classes.button}>Entrar</Button>
+                 <Button onClick={()=> this.logar()} className={classes.button}>Entrar</Button>
                 </CardActions>
           </Card>
         )
