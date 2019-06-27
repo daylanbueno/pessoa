@@ -3,24 +3,25 @@ import Login from '../Login';
 import RotasComponent from './RotasComponent';
 import Layout from '../template/LayoutComponent'
 
-export default class Autenticado extends Component {
+import { connect } from 'react-redux'
+
+export class Autenticado extends Component {
 
     renderRotas() {
         return(
             <Layout titulo ="Siste de Gestão de Pessoa">
-                    <RotasComponent/>
+                    <RotasComponent />
             </Layout>
         )
     }
-
     renderLogin() {
         return(
             <Login/>
         )
     }
-
     render() {
-        const isAutenticado  = localStorage.getItem('isAutenticado')
+     const { usuario } = this.props
+        const isAutenticado  = usuario.isAutenticado
         console.log(isAutenticado)
         return (
          <div>
@@ -29,3 +30,8 @@ export default class Autenticado extends Component {
         )
     }
 } 
+
+const mapStateToProps = state => ({
+    usuario: state.usuario,
+})
+export default connect(mapStateToProps, null)(Autenticado)  

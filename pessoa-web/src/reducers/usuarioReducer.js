@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   
   export default (state, action) => {
     if (typeof state === 'undefined') {
+      console.log('state',state, 'action',action)
       return INITIAL_STATE
     }
     switch (action.type) {

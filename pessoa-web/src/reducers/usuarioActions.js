@@ -1,11 +1,10 @@
 
-export const efetuarLogin = event => ({
+export const efetuarLogin = user => ({
     type: 'EFETUAR_LOGIN',
-    payload: event.target.value
-  })
-  
-  export const eftuarLogout = event => ({
-    type: 'EFETUAR_LOGOU',
-    payload: event.target.value
-  })
+    payload: user
+})  
+export const eftuarLogout = isValido => ({
+  type: 'EFETUAR_LOGOU',
+  payload: isValido
+})
     

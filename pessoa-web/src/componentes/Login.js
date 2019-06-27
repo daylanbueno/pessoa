@@ -48,17 +48,8 @@ class  Login extends Component {
        console.log('user',this.state.usuario)
     };
 
-    autenticar(){
-       const event = {
-            target:{
-                value:true
-            }
-        }
-        this.props.efetuarLogin(event)
-    }
-
     render() {
-        const {classes} = this.props
+        const {classes, efetuarLogin} = this.props
         return (
             <Card className={classes.card}>
                 <CardContent>
@@ -88,21 +79,14 @@ class  Login extends Component {
                 </Typography>
                 </CardContent>
                 <CardActions>
-                <Button onClick={this.autenticar.bind(this)} className={classes.button}>Entrar</Button>
+                 <Button onClick={()=> efetuarLogin(true)} className={classes.button}>Entrar</Button>
                 </CardActions>
           </Card>
         )
     }
 } 
 const materialUIEnhance = withStyles(styles)(Login)
-
-const mapStateToProps = state => ({
-  
-  })
-  
-
 const mapDispatchToProps = dispatch => bindActionCreators({
     efetuarLogin,
 }, dispatch)
-  
-export default connect(mapStateToProps, mapDispatchToProps)(materialUIEnhance)
+export default connect(null, mapDispatchToProps)(materialUIEnhance)
