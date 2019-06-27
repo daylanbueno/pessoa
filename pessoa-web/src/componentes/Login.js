@@ -7,6 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
+import { efetuarLogin } from '../reducers/usuarioActions'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
 const styles = {  
     card: {
       height:350,
@@ -44,8 +49,12 @@ class  Login extends Component {
     };
 
     autenticar(){
-        console.log('aut')
-        localStorage.setItem('isAtutenticado','true')
+       const event = {
+            target:{
+                value:true
+            }
+        }
+        this.props.efetuarLogin(event)
     }
 
     render() {
@@ -85,4 +94,15 @@ class  Login extends Component {
         )
     }
 } 
-export default withStyles(styles)(Login);
+const materialUIEnhance = withStyles(styles)(Login)
+
+const mapStateToProps = state => ({
+  
+  })
+  
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    efetuarLogin,
+}, dispatch)
+  
+export default connect(mapStateToProps, mapDispatchToProps)(materialUIEnhance)

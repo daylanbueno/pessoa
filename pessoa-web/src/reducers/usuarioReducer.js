@@ -6,7 +6,6 @@ const INITIAL_STATE = {
     if (typeof state === 'undefined') {
       return INITIAL_STATE
     }
-  
     switch (action.type) {
       case 'EFETUAR_LOGIN':
         return { ...state, isAutenticado: action.payload }
@@ -16,4 +15,3 @@ const INITIAL_STATE = {
         return state
     }
   }
-  
