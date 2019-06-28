@@ -28,8 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		Set<TipoPerfil> perfis = new HashSet<>();
 		perfis.add(usuario.getTipoPerfil());
-		
-		return new UserSS(usuario.getLogin(), usuario.getSenha(), perfis);
+		return new UserSS(usuario.getLogin(), usuario.getSenha(), perfis,usuario.getPessoa().getnome());
 	}
 
 }

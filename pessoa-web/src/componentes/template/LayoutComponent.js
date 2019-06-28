@@ -25,14 +25,18 @@ const styles = theme => ({
   root: {
     display: 'flex',
   },
+  titulo: {
+    width:800
+  },
+  userName: {
+    marginLeft: '18%',
+    marginRight:2
+  },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-  },
-  logout: {
-    marginLeft: '75%'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -85,6 +89,7 @@ class PersistentDrawerLeft extends React.Component {
 
   state = {
     open: false,
+    nomeUsuarioLogado: localStorage.getItem('nomeUsuario')
   };
 
   handleDrawerOpen = () => {
@@ -117,10 +122,11 @@ class PersistentDrawerLeft extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography className={classes.titulo} variant="h6" color="inherit" noWrap>
               {this.props.titulo}
             </Typography>
-            <Button color="inherit" onClick={()=> eftuarLogout()} className={classes.logout} position={"static"}>Sair</Button>
+            <div className={classes.userName}>{this.state.nomeUsuarioLogado}</div>
+            <Button color="inherit" onClick={()=> eftuarLogout()}  position={"static"}>Sair</Button>
           </Toolbar>
         </AppBar>
         <Drawer

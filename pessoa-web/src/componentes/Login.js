@@ -38,13 +38,6 @@ const styles = {
 
 class  Login extends Component {
 
-
-    componentWillMount() {
-        if(this.state.usuario) {
-            this.logar()
-        }
-    }
-
     state = {
         usuario: {
             login:'',
@@ -55,8 +48,11 @@ class  Login extends Component {
     logar() {
         axios.post(`${URL_BASE}/login`,this.state.usuario)
         .then(resp => {
+            console.log('Resposta',resp)
             const token = resp.headers['authorization']
+            const nomeUsuarioLogado = resp.data
             localStorage.setItem('token', token)
+            localStorage.setItem('nomeUsuario', nomeUsuarioLogado)
            this.props.efetuarLogin(true)
         }).catch (e => {
             showMsgError('Usuário ou senha invalida!')

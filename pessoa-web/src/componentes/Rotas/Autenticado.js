@@ -22,7 +22,6 @@ export class Autenticado extends Component {
     render() {
      const { usuario } = this.props
         const isAutenticado  = usuario.isAutenticado
-        console.log(isAutenticado)
         return (
          <div>
              {isAutenticado? this.renderRotas() : this.renderLogin()}

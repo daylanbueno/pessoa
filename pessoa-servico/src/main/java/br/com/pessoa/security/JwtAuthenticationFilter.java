@@ -52,11 +52,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 		String username = ((UserSS) auth.getPrincipal()).getUsername();
+		String nome = ((UserSS) auth.getPrincipal()).getNome();
         String token = jwtUtil.gerarToken(username);
         res.addHeader("Authorization", "Bearer " + token);
         res.addHeader("access-control-expose-headers", "Authorization");
-
-	}
+        res.getWriter().append(nome);
+        res.addHeader("nomeUsuario",nome);	
+     }
 
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
 		 
