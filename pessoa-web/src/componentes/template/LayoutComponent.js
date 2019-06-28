@@ -13,6 +13,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuComponent from '../MenuComponent';
+import Button from '@material-ui/core/Button';
+
+import { eftuarLogout } from '../../reducers/usuarioActions'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 const drawerWidth = 240;
 
@@ -25,6 +30,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+  },
+  logout: {
+    marginLeft: '75%'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -74,6 +82,7 @@ const styles = theme => ({
 });
 
 class PersistentDrawerLeft extends React.Component {
+
   state = {
     open: false,
   };
@@ -87,7 +96,7 @@ class PersistentDrawerLeft extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme ,eftuarLogout } = this.props;
     const { open } = this.state;
 
     return (
@@ -111,6 +120,7 @@ class PersistentDrawerLeft extends React.Component {
             <Typography variant="h6" color="inherit" noWrap>
               {this.props.titulo}
             </Typography>
+            <Button color="inherit" onClick={()=> eftuarLogout()} className={classes.logout} position={"static"}>Sair</Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -148,5 +158,9 @@ PersistentDrawerLeft.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
+const materialUIEnhance = withStyles(styles,{ withTheme: true })(PersistentDrawerLeft)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  eftuarLogout,
+}, dispatch)
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default connect(null, mapDispatchToProps)(materialUIEnhance)
