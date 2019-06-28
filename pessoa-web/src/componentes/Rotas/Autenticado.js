@@ -9,7 +9,7 @@ export class Autenticado extends Component {
 
     renderRotas() {
         return(
-            <Layout titulo ="Siste de Gestão de Pessoa">
+            <Layout titulo ="Sistema de Gestão de Pessoa">
                     <RotasComponent />
             </Layout>
         )

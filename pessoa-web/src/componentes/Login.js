@@ -48,6 +48,8 @@ class  Login extends Component {
     logar() {
         axios.post(`${URL_BASE}/login`,this.state.usuario)
         .then(resp => {
+            const token = resp.headers['authorization']
+            localStorage.setItem('token', token)
            this.props.efetuarLogin(true)
         }).catch (e => {
             showMsgError('Login ou senha invalida!')

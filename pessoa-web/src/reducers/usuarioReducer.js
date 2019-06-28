@@ -11,6 +11,7 @@ const INITIAL_STATE = {
       case 'EFETUAR_LOGIN':
         return { ...state, isAutenticado: action.payload }
       case 'EFETUAR_LOGOU':
+        localStorage.removeItem('token')
         return { ...state, isAutenticado: action.payload }
       default:
         return state

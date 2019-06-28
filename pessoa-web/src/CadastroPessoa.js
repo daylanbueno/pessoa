@@ -34,8 +34,13 @@ const styles = {
     height:700,
     margin:20
   },
+  grid: {
+    margin:15
+  },
   input: {
     margin: 10,
+    marginLef:10,
+    marginHeight:10
   },
   button: {
     margin: 25
@@ -258,6 +263,7 @@ class CadastroPessoa extends Component {
 
   handleChange(event) {
     var isPessoaFisica = (event.target.value === "true")
+    this.limparCampos()
     this.setState({isPessoaFisica:isPessoaFisica})
   }
 
@@ -304,7 +310,7 @@ class CadastroPessoa extends Component {
             Dados da pessoa
         </Typography>
         <CardActions>
-          <Grid container spacing={16}>
+          <Grid container spacing={16} className={classes.grid}>
             <Grid item xs={12}> 
             <FormControlLabel
              label="Fisica"

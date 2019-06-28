@@ -40,6 +40,14 @@ const styles = {
     margin: 10,
     width:400
   },
+  titulo: {
+    margin:20,
+    color:'#3f51b5'
+  },
+  radios: {
+    margin:10
+  }
+
 };
 
 class CadastroPessoa extends Component {
@@ -196,12 +204,13 @@ class CadastroPessoa extends Component {
     return ( 
       <div>
       <Card className={classes.card}>
-        <Typography  variant="subtitle1" gutterBottom>
+        <Typography  className={classes.titulo} variant="display1" gutterBottom>
             Dados pessoas
         </Typography>
-        <CardActions>
+        
+        <CardActions >
           <Grid container spacing={24}>
-            <Grid item xs={12}> 
+            <Grid item xs={12} className={classes.radios}> 
                 <FormControlLabel
                 label="Fisica"
                 control={<Radio checked={this.state.isPessoaFisica} onChange={this.handleChange.bind(this)} value="true"  color="primary"/>}
