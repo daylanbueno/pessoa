@@ -20,9 +20,6 @@ public class UserSS implements UserDetails {
 	private String senha;
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	
-	
-
 	public UserSS(String login, String senha,  Set<TipoPerfil> perfis) {
 		super();
 		this.login = login;

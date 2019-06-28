@@ -58,7 +58,7 @@ public class PessoaApplication implements CommandLineRunner {
 		pessoaRepository.save(pj);
 		
 		Pessoa  p = pessoaRepository.recuperarPessoaPorCpf("045.013.481-43").get(0);
-		Usuario user = new Usuario("dbsantos", passwordEncoder.encode("123"),p,TipoPerfil.ROLE_ADMIN);
+		Usuario user = new Usuario("dbsantos", passwordEncoder.encode("teste"),p,TipoPerfil.ROLE_ADMIN);
 		
 		usuarioRepository.save(user);
 	}

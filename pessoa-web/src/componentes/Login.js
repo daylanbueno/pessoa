@@ -38,6 +38,13 @@ const styles = {
 
 class  Login extends Component {
 
+
+    componentWillMount() {
+        if(this.state.usuario) {
+            this.logar()
+        }
+    }
+
     state = {
         usuario: {
             login:'',
@@ -52,7 +59,7 @@ class  Login extends Component {
             localStorage.setItem('token', token)
            this.props.efetuarLogin(true)
         }).catch (e => {
-            showMsgError('Login ou senha invalida!')
+            showMsgError('Usuário ou senha invalida!')
           console.log('Error: ',e)
         })
       }
@@ -64,8 +71,14 @@ class  Login extends Component {
        console.log('user',this.state.usuario)
     };
 
+    efetuarLogin(event) {
+        if (event.key === 'Enter') {
+            this.logar()
+          }
+    }
+
     render() {
-        const {classes} = this.props
+        const { classes } = this.props
         return (
             <Card className={classes.card}>
                 <CardContent>
@@ -95,7 +108,7 @@ class  Login extends Component {
                 </Typography>
                 </CardContent>
                 <CardActions>
-                 <Button onClick={()=> this.logar()} className={classes.button}>Entrar</Button>
+                 <Button  onClick={()=> this.logar()} className={classes.button}>Entrar</Button>
                 </CardActions>
           </Card>
         )
