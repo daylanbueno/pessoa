@@ -8,13 +8,12 @@ import Button from '@material-ui/core/Button';
 import { Icon } from 'react-icons-kit'
 import { checkCircle } from 'react-icons-kit/fa/checkCircle'
 import {search} from 'react-icons-kit/fa/search'
-import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Cpf from './Cpf';
 import  { URL_BASE } from '../util/Url'
 import axios from 'axios'
-import { showMsgError } from '../util/Menssages';
+import { showMsgError, showMsgSuccess } from '../util/Menssages';
 
 const styles = {  
     card: {
@@ -54,34 +53,64 @@ const styles = {
   
 export  class UsuarioCadastro extends Component {
     state = {
-        cpf:'',
         nome:'',
         form: { 
             login:'',
             senha:'',
-            idPessoa:''
+            idPessoa:'',
+            cpf:''
         }
     }
 
     salvarPessoa () {
+      const { form } = this.state
+      if (this.temCampoInvalido()) {
+        return
+      }
+      axios.post(`${URL_BASE}/usuarios`,form)
+      .then(resp => {
+        this.limparCampos();
+        showMsgSuccess('Operação realizada com sucesso!')
+      }).catch (e => {
+        console.log('Error: ',e)
+      })
+    }
+
+    limparCampos() {
+      const { form } = this.state
+      form['login'] = ''
+      form['senha'] = ''
+      form['cpf'] = ''
+      this.setState({nome:'',form:form})
+    }
+
+    temCampoInvalido() {
+      const { form } = this.state
+      if(form['login'] ==='') {
+        showMsgError('O campo login é obrigatório')
+        return true
+      }
+      if(form['senha'] ==='') {
+        showMsgError('O campo senha é obrigatório')
+        return true
+      }
     }
 
     recuperarPessoaPorCpf() {
-        const { cpf, form } = this.state
-        if (cpf ==='') {
+        const {  form } = this.state
+        if (form['cpf'] ==='') {
             showMsgError('O campo CPF é obrigatório')
             return 
         }
-        console.log('pesquisando',cpf)
-        axios.get(`${URL_BASE}/pessoas/cpf/${cpf}`)
+        axios.get(`${URL_BASE}/usuarios/${form['cpf']}`)
         .then(resp => {
-          const resultado = resp.data[0]
-          console.log('resultado',resultado)
-          if(resultado === undefined ) {
-            showMsgError('Não foi encontrado resultado que atenda os parametros da pesquisa.')
+          const usuario = resp.data
+          if(usuario === "" ) {
+            showMsgError('Para efetuar o cadastro deve ter uma pessoa cadastrada.')
           }
-          form['idPessoa'] = resultado.id
-          this.setState({nome:resultado.nome, form:form})
+          form['idPessoa'] = usuario.idPessoa
+          form['login'] = usuario.login
+          this.setState({nome:usuario.nome, form:form})
         }).catch (e => {
           console.log('Error: ',e)
         })
@@ -90,7 +119,6 @@ export  class UsuarioCadastro extends Component {
     onChange(nomeCampo, evento) {
         const { form } = this.state
         form[nomeCampo] = evento.target.value
-        console.log('form',form)
         this.setState({form:form})
     }
 
@@ -113,7 +141,7 @@ export  class UsuarioCadastro extends Component {
                     margin="normal"
                     className={classes.inputCpf}
                     value={form.cpf}
-                    onChange={this.onChangeFiltro.bind(this)}
+                    onChange={this.onChange.bind(this,'cpf')}
                     label="CPF" 
                     autoFocus 
                     placeholder='Digite o cpf'
@@ -160,11 +188,8 @@ export  class UsuarioCadastro extends Component {
             </Grid>
               <Grid item xs={12}>
                  <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarPessoa.bind(this)}>
-                    Cadastrar <Icon icon={checkCircle} ></Icon>
+                    Salvar  <Icon icon={checkCircle} ></Icon>
                   </Button>
-                 <Button variant="contained" component={Link}  to={`/consulta`}>
-                    Pesquisar <Icon icon={search} ></Icon>
-                 </Button>
               </Grid>             
           </Grid>
         </CardActions>

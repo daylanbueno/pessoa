@@ -46,13 +46,14 @@ class  Login extends Component {
     }
 
     logar() {
-        axios.post(`${URL_BASE}/login`,this.state.usuario)
+        const { usuario } = this.state
+        axios.post(`${URL_BASE}/login`,usuario)
         .then(resp => {
-            console.log('Resposta',resp)
             const token = resp.headers['authorization']
             const nomeUsuarioLogado = resp.data
             localStorage.setItem('token', token)
             localStorage.setItem('nomeUsuario', nomeUsuarioLogado)
+            localStorage.setItem('usuarioLogado', usuario.login)
            this.props.efetuarLogin(true)
         }).catch (e => {
             showMsgError('Usuário ou senha invalida!')

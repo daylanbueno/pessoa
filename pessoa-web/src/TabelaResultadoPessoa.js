@@ -76,7 +76,7 @@ class TabelaResultadoPessoa extends React.Component {
                     {row.contato.telefone}
                   </TableCell>
                   <TableCell>
-                    <Button component={Link}  to={`/cadastro?idPessoa=${row.id}`} >  
+                    <Button component={Link}  to={`/pessoa-cadastro?idPessoa=${row.id}`} >  
                       <Icon icon={ic_mode_edit} ></Icon>
                     </Button>
                     <Button onClick={this.abrirDialogConfirmacao.bind(this,row.id)} >

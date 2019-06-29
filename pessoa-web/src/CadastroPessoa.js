@@ -72,6 +72,7 @@ class CadastroPessoa extends Component {
   
     componentDidMount() {
       const { idPessoa } = this.state
+      console.log('idPessoa',idPessoa)
       if (idPessoa !== undefined) {
         this.recuperarPessoaParaEdicao(idPessoa);
       }
@@ -445,7 +446,7 @@ class CadastroPessoa extends Component {
                   <Button variant="contained" className={classes.button} onClick={this.limparCampos.bind(this)} >
                     Cancelar 
                  </Button>
-                 <Button variant="contained" component={Link}  to={`/consulta`}>
+                 <Button variant="contained" component={Link}  to={`/pessoa-consulta`}>
                     Pesquisar <Icon icon={search} ></Icon>
                  </Button>
               </Grid>             
