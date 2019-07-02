@@ -14,6 +14,7 @@ import br.com.pessoa.entity.Usuario;
 import br.com.pessoa.enums.TipoPerfil;
 import br.com.pessoa.repository.PessoaRepository;
 import br.com.pessoa.repository.UsuarioRepository;
+import br.com.pessoa.service.exceptions.NegocioException;
 
 @Service
 public class UsuarioService {
@@ -38,8 +39,16 @@ public class UsuarioService {
 		if (usuarioAExistente != null) {
 			usuarioEntity.setId(usuarioAExistente.getId());
 		}
+		jaExisteUsuarioComMesmoLogin(user.getLogin());
 		codificarSenhaUsuario(usuarioEntity);
 		usuarioRepository.save(usuarioEntity);
+	}
+	
+	private void jaExisteUsuarioComMesmoLogin(String login) {
+		Usuario user = usuarioRepository.recuperarUsuarioPorLogin(login);
+		if (user != null) {
+			throw  new NegocioException("Já existe um usuário com esse login definido, favor escolha outro login valido.");
+		}
 	}
 	
 	private void codificarSenhaUsuario(Usuario usuario) {

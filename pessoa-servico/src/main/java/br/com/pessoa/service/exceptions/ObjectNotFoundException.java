@@ -2,7 +2,12 @@ package br.com.pessoa.service.exceptions;
 
 public class ObjectNotFoundException extends  RuntimeException {
 
-    public ObjectNotFoundException(String msg) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ObjectNotFoundException(String msg) {
         super(msg);
     }
 

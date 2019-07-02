@@ -62,17 +62,19 @@ export  class UsuarioCadastro extends Component {
         }
     }
 
-    salvarPessoa () {
+    salvarUsuario () {
       const { form } = this.state
       if (this.temCampoInvalido()) {
         return
       }
       axios.post(`${URL_BASE}/usuarios`,form)
-      .then(resp => {
+      .then (resp => {
         this.limparCampos();
         showMsgSuccess('Operação realizada com sucesso!')
-      }).catch (e => {
-        console.log('Error: ',e)
+      }).catch (error => {
+        const { msg } = error.response.data
+        showMsgError(msg)
+        console.log('Error : ', error.response)
       })
     }
 
@@ -187,7 +189,7 @@ export  class UsuarioCadastro extends Component {
                     variant="outlined"/>
             </Grid>
               <Grid item xs={12}>
-                 <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarPessoa.bind(this)}>
+                 <Button variant="contained" color="primary" className={classes.button} onClick={this.salvarUsuario.bind(this)}>
                     Salvar  <Icon icon={checkCircle} ></Icon>
                   </Button>
               </Grid>             
