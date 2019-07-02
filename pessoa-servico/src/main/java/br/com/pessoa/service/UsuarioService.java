@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import org.jboss.jandex.TypeTarget.Usage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,14 +40,14 @@ public class UsuarioService {
 		if (usuarioAExistente != null) {
 			usuarioEntity.setId(usuarioAExistente.getId());
 		}
-		jaExisteUsuarioComMesmoLogin(user.getLogin());
+		jaExisteUsuarioComMesmoLogin(user);
 		codificarSenhaUsuario(usuarioEntity);
 		usuarioRepository.save(usuarioEntity);
 	}
 	
-	private void jaExisteUsuarioComMesmoLogin(String login) {
-		Usuario user = usuarioRepository.recuperarUsuarioPorLogin(login);
-		if (user != null) {
+	private void jaExisteUsuarioComMesmoLogin(UsuarioDto usuarioDto) {
+		Usuario user = usuarioRepository.recuperarUsuarioPorLogin(usuarioDto.getLogin());
+		if (user != null && !user.getPessoa().getCpf().equals(usuarioDto.getCpf())) {
 			throw  new NegocioException("Já existe um usuário com esse login definido, favor escolha outro login valido.");
 		}
 	}

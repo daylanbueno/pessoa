@@ -56,7 +56,7 @@ class  Login extends Component {
             localStorage.setItem('usuarioLogado', usuario.login)
            this.props.efetuarLogin(true)
         }).catch (e => {
-            showMsgError('Usuário ou senha invalida!')
+            showMsgError('Usuário ou Senha são invalidos, tente novamente com usuário valido!')
           console.log('Error: ',e)
         })
       }
